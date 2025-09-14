@@ -18,4 +18,5 @@ obj/nemu/cpu/exec/exec.o: nemu/src/cpu/exec/exec.c \
  nemu/src/cpu/exec/logic/shr.h nemu/src/cpu/exec/logic/shrd.h \
  nemu/src/cpu/exec/string/rep.h nemu/src/cpu/exec/string/scas.h \
  nemu/src/cpu/exec/string/stos.h nemu/src/cpu/exec/string/movs.h \
- nemu/src/cpu/exec/misc/misc.h nemu/src/cpu/exec/special/special.h
+ nemu/src/cpu/exec/misc/misc.h nemu/src/cpu/exec/special/special.h \
+ nemu/src/cpu/exec/control/call.h
