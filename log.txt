@@ -1,0 +1,2 @@
+  100000:   bd 00 00 00 00                        movl $0x0,%ebp
+  100005:   bc f0 ff ff 07                        movl $0x7fffff0,%esp
