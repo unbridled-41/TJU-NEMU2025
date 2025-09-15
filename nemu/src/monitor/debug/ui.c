@@ -87,13 +87,14 @@ static int cmd_x(char *args){
 }
 
 static int cmd_p(char *args){
- bool success=true;
- uint32_t val =expr(args,&success);//调用expr函数
- if(success){
-	printf("0x%x (%u)\n",val,val);
-
- }
- return 0;
+	bool success = true;
+	uint32_t val = expr(args , &success);
+	if(success){
+		printf("$%d = %u (0x%x)\n", nr_exp, val, val);
+	//	printf("%u\n",val);
+		nr_exp++;
+	}
+	return 0;
 }
 
 static int cmd_help(char *args);
@@ -105,13 +106,11 @@ static struct {
 } cmd_table [] = {
 	{ "help", "Display informations about all supported commands", cmd_help },
 	{ "c", "Continue the execution of the program", cmd_c },
-    { "q", "Exit NEMU", cmd_q }, 
-
-	/* TODO: Add more commands */
-    { "si", "Single step", cmd_si },
-    { "info", "info r - print register values; info w - show watch point state", cmd_info },
-	{ "x", "Examine memory", cmd_x },
-	{ "p", "Print value of the expression", cmd_p}, 
+    { "q", "Exit NEMU", cmd_q },
+	{ "si", "The program pauses after executing N instructions in a single step(when N is not given, it defaults to 1)", cmd_si},
+	{ "info", "info  r : Print register status, \ninfo w :Print watchpoints.",cmd_info},
+	{ "x", "Examine memory: x SIZE ADDRESS.", cmd_x},
+	{ "p", "Print value of the expression", cmd_p},
 
 	/* TODO: Add more commands */
 
