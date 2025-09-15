@@ -31,10 +31,17 @@
 #include "string/scas.h"
 #include "string/stos.h"
 #include "string/movs.h"
+#include "logic/test.h"
+
+#include "arith/cmp.h"
+#include "arith/sub.h"
 
 #include "misc/misc.h"
 
 #include "special/special.h"
 
 #include "control/call.h"
+#include "control/jcc.h"
+#include "control/ret.h"
 #include "data-mov/push.h"
+#include "data-mov/pop.h"
