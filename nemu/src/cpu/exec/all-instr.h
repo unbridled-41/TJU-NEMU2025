@@ -5,6 +5,7 @@
 #include "data-mov/movext.h"
 #include "data-mov/cltd.h"
 
+
 #include "arith/adc.h"
 #include "arith/dec.h"
 #include "arith/inc.h"
@@ -36,3 +37,21 @@
 
 #include "special/special.h"
 
+#include "arith/call.h"
+#include "arith/push.h"
+#include "arith/test.h"
+#include "arith/je.h"
+#include "arith/cmp.h"
+#include "control/pop.h"
+#include "control/ret.h"
+#include "control/jcc.h"
+#include "control/leave.h"
+#include "logic/setcc.h"
+#include "arith/add.h"
+#include "control/lods.h"
+#include "data-mov/cmovns.h"
+#include "logic/shld.h"
+#include "logic/sete.h"
+#include "data-mov/lgdt.h"
+#include "string/cld.h"
+#include "string/std.h"

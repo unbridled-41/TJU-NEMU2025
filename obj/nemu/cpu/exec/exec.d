@@ -2,6 +2,8 @@ obj/nemu/cpu/exec/exec.o: nemu/src/cpu/exec/exec.c \
  nemu/include/cpu/helper.h nemu/include/nemu.h nemu/include/common.h \
  nemu/include/debug.h nemu/include/macro.h nemu/include/memory/memory.h \
  nemu/include/common.h nemu/include/cpu/reg.h \
+ nemu/include/../../lib-common/x86-inc/cpu.h \
+ nemu/include/../../lib-common/x86-inc/mmu.h \
  nemu/include/cpu/decode/operand.h nemu/include/cpu/eflags.h \
  nemu/include/cpu/decode/modrm.h nemu/src/cpu/exec/all-instr.h \
  nemu/src/cpu/exec/prefix/prefix.h nemu/src/cpu/exec/data-mov/mov.h \
@@ -18,4 +20,13 @@ obj/nemu/cpu/exec/exec.o: nemu/src/cpu/exec/exec.c \
  nemu/src/cpu/exec/logic/shr.h nemu/src/cpu/exec/logic/shrd.h \
  nemu/src/cpu/exec/string/rep.h nemu/src/cpu/exec/string/scas.h \
  nemu/src/cpu/exec/string/stos.h nemu/src/cpu/exec/string/movs.h \
- nemu/src/cpu/exec/misc/misc.h nemu/src/cpu/exec/special/special.h
+ nemu/src/cpu/exec/misc/misc.h nemu/src/cpu/exec/special/special.h \
+ nemu/src/cpu/exec/arith/call.h nemu/src/cpu/exec/arith/push.h \
+ nemu/src/cpu/exec/arith/test.h nemu/src/cpu/exec/arith/je.h \
+ nemu/src/cpu/exec/arith/cmp.h nemu/src/cpu/exec/control/pop.h \
+ nemu/src/cpu/exec/control/ret.h nemu/src/cpu/exec/control/jcc.h \
+ nemu/src/cpu/exec/control/leave.h nemu/src/cpu/exec/logic/setcc.h \
+ nemu/src/cpu/exec/arith/add.h nemu/src/cpu/exec/control/lods.h \
+ nemu/src/cpu/exec/data-mov/cmovns.h nemu/src/cpu/exec/logic/shld.h \
+ nemu/src/cpu/exec/logic/sete.h nemu/src/cpu/exec/data-mov/lgdt.h \
+ nemu/src/cpu/exec/string/cld.h nemu/src/cpu/exec/string/std.h
