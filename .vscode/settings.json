@@ -4,6 +4,8 @@
         "movs.h": "c",
         "sub-template.h": "c",
         "cmp.h": "c",
-        "sbb.h": "c"
+        "sbb.h": "c",
+        "leave.h": "c",
+        "special.h": "c"
     }
 }
