@@ -28,6 +28,9 @@ char* rl_gets() {
 	return line_read;
 }
 
+int nr_exp=0,nr_wp=0;
+/* TODO: Add single step */
+
 static int cmd_c(char *args) {
 	cpu_exec(-1);
 	return 0;
@@ -64,29 +67,33 @@ static int cmd_q(char *args) {
 }
 
 static int cmd_x(char *args){
-	char *sencondWord = strtok(NULL," ");
-	char *thirdWord = strtok(NULL, " ");
-	
-	int step = 0;
-	swaddr_t address;
-	
-	sscanf(sencondWord, "%d", &step);
-	sscanf(thirdWord, "%x", &address);
-
-	int i, j = 0;
-	for (i = 0; i < step; i++){
-		if (j % 4 == 0){
-			printf("0x%x:", address);
-		}
-		printf("0x%08x ", swaddr_read(address, 4));
-		address += 4;
-		j++;
-		if (j % 4 == 0){
-			printf("\n");
-		}
-			}
-	printf("\n");
+	int len = 0;
+	char exp[1024];
+	if(args==NULL || sscanf(args, "%d %[^\n]", &len, exp)!=2){
+		printf("Invalid Arguments %s.\n",args);
+		return 0;
+	}
+	bool success = true;
+	swaddr_t addr = expr(exp, &success);
+	if(!success){
+		printf("Invalid Address %s.\n",exp);
+		return 0;
+	}
+	int i;
+	for(i = 0;i < len; i++){
+		printf("0x%08x:\t\t0x%08x\n", addr + i * 4, swaddr_read(addr + i * 4, 4));
+	}
 	return 0;
+}
+
+static int cmd_p(char *args){
+ bool success=true;
+ uint32_t val =expr(args,&success);//调用expr函数
+ if(success){
+	printf("0x%x (%u)\n",val,val);
+
+ }
+ return 0;
 }
 
 static int cmd_help(char *args);
@@ -98,10 +105,13 @@ static struct {
 } cmd_table [] = {
 	{ "help", "Display informations about all supported commands", cmd_help },
 	{ "c", "Continue the execution of the program", cmd_c },
-	{ "q", "Exit NEMU", cmd_q },
-	{ "si", "One step", cmd_si },
-	{ "info", "Display all informations of regisiters", cmd_info  },
+    { "q", "Exit NEMU", cmd_q }, 
+
+	/* TODO: Add more commands */
+    { "si", "Single step", cmd_si },
+    { "info", "info r - print register values; info w - show watch point state", cmd_info },
 	{ "x", "Examine memory", cmd_x },
+	{ "p", "Print value of the expression", cmd_p}, 
 
 	/* TODO: Add more commands */
 
