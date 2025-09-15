@@ -73,6 +73,11 @@ void cpu_exec(volatile uint32_t n) {
 #endif
 
 		/* TODO: check watchpoints here. */
+		if(check_wp(cpu.eip)){			
+			nemu_state = STOP;
+			return;
+		}
+			
 
 
 #ifdef HAS_DEVICE
