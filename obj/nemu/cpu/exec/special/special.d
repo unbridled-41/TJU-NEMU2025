@@ -4,4 +4,5 @@ obj/nemu/cpu/exec/special/special.o: nemu/src/cpu/exec/special/special.c \
  nemu/include/macro.h nemu/include/memory/memory.h nemu/include/common.h \
  nemu/include/cpu/reg.h nemu/include/cpu/decode/operand.h \
  nemu/include/cpu/eflags.h nemu/include/cpu/decode/decode.h \
- nemu/include/monitor/monitor.h
+ nemu/include/monitor/monitor.h nemu/include/monitor/expr.h \
+ nemu/include/monitor/watchpoint.h
