@@ -40,7 +40,7 @@ make_group(group2_i_b,
 /* 0xc1 */
 make_group(group2_i_v,
 	inv, inv, inv, inv, 
-	inv, inv, inv, sar_rm_imm_v)
+	shl_rm_imm_v, inv, inv, sar_rm_imm_v)
 
 /* 0xd0 */
 make_group(group2_1_b,
@@ -94,7 +94,7 @@ make_group(group7,
 /* TODO: Add more instructions!!! */
 
 helper_fun opcode_table [256] = {
-/* 0x00 */	inv, add_r2rm_v, inv, inv,
+/* 0x00 */	inv, add_r2rm_v, inv, add_rm2r_v,
 /* 0x04 */	inv, add_i2a_v, inv, inv,
 /* 0x08 */	inv, or_r2rm_v, or_rm2r_b, inv,
 /* 0x0c */	or_i2a_b, inv, inv, _2byte_esc,
