@@ -7,14 +7,11 @@
 #include <regex.h>
 
 enum {
-	NOTYPE = 256, EQ = 4 ,
-    NUM = 1,
-	RESGISTER = 2,
-    HEX = 3,
-    NOTEQ = 5,
-    OR = 6,
-    AND = 7,
-    POINT,NEG
+	NOTYPE = 256, EQ, NEQ, LEQ, GEQ,
+	AND, OR,
+	NEG, REF,
+	DECNUM, HEXNUM,
+	REGNAME,
 	/* TODO: Add more token types */
 
 };
@@ -29,24 +26,27 @@ static struct rule {
 	 */
 
 	{" +",	NOTYPE},				// spaces
-	{"\\+", '+'}, 	// plus
-	{"\\-",'-'},
-	{"\\*",'*'},
-	{"\\/",'/'},
+	{"\\+", '+'},					// plus
+	{"\\-", '-'},                                   // minus
+	{"\\*", '*'},					// multiplication
+	{"\\/", '/'},					// division
+	{"\\%", '%'},					// modulo
+	{"\\(", '('},					// left backet
+	{"\\)", ')'},					// right backet
 
-	{"\\$[a-z]+", RESGISTER},
-	{"0[xX][0-9a-fA-F]+", HEX},
-	{"[0-9]+", NUM},
-	{"==", EQ},	// equal
-
-	{"!=", NOTEQ},
-
-	{"\\(", '('},
-	{"\\)", ')'},
-
-	{"\\|\\|", OR},
-	{"&&", AND},
-	{"!", '!'},
+	{"==", EQ},						// equal	
+	{"<=", LEQ},
+	{">=", GEQ},
+	{">", '>'},
+	{"<", '<'},
+	{"!=", NEQ},
+	{"\\=", '='},
+	{"\\!",'!'},
+	{"\\&\\&",AND},
+	{"\\|\\|",OR},
+	{"0x[0-9a-fA-F]{1,10}", HEXNUM},
+	{"[0-9]{1,10}", DECNUM},
+	{"\\$[a-z]{2,3}", REGNAME},
 };
 
 #define NR_REGEX (sizeof(rules) / sizeof(rules[0]) )
@@ -75,7 +75,7 @@ typedef struct token {
 	char str[32];
 } Token;
 
-Token tokens[32];
+Token tokens[12800];
 int nr_token;
 
 static bool make_token(char *e) {
@@ -99,94 +99,40 @@ static bool make_token(char *e) {
 				 * to record the token in the array `tokens'. For certain types
 				 * of tokens, some extra actions should be performed.
 				 */
-                                int j;
-				 for (j = 0;j < 32;j++)
-				 {
-					 tokens[nr_token].str[j] = '\0';
-				 }
-
-		switch(rules[i].token_type) {
-			case 256:
-			break;
-			case 1:
-			tokens[nr_token].type = 1;
-	strncpy(tokens[nr_token].str,&e[position - substr_len],substr_len);
-			nr_token++;
-			break;
-
-			case 2:
-                        tokens[nr_token].type = 2;
-        strncpy(tokens[nr_token].str,&e[position - substr_len],substr_len);
-                        nr_token++;
-                        break;
-
-			case 3:
-                        tokens[nr_token].type = 3;
-        strncpy(tokens[nr_token].str,&e[position - substr_len],substr_len);
-                        nr_token++;
-                        break;
-
-			case 4:
-                        tokens[nr_token].type = 4;
-                        strcpy(tokens[nr_token].str,"==");
-			nr_token++;
-			break;
-
-			case 5:
-                        tokens[nr_token].type = 5;
-                        strcpy(tokens[nr_token].str,"!=");
-                        nr_token++;
-                        break;
-
-			case 6:
-                        tokens[nr_token].type = 6;
-                        strcpy(tokens[nr_token].str,"||");
-                        nr_token++;
-                        break;
-
-			case 7:
-                        tokens[nr_token].type = 7;
-                        strcpy(tokens[nr_token].str,"&&");
-                        nr_token++;
-                        break;
-
-			case '+':
-                        tokens[nr_token].type = '+';
-                        nr_token++;
-                        break;
-
-			case '-':
-                        tokens[nr_token].type = '-';
-                        nr_token++;
-                        break;
-
-			case '*':
-                        tokens[nr_token].type = '*';
-                        nr_token++;
-                        break;
-
-			case '/':
-                        tokens[nr_token].type = '/';
-                        nr_token++;
-                        break;
-
-			case '!':
-                        tokens[nr_token].type = '!';
-                        nr_token++;
-                        break;
-
-			case '(':
-                        tokens[nr_token].type = '(';
-                        nr_token++;
-                        break;
-
-			case ')':
-                        tokens[nr_token].type = ')';
-                        nr_token++;
-                        break;
-					default: panic("please implement me");
-					 assert(0);
+if(rules[i].token_type == NOTYPE)
+					break;
+				
+				switch(rules[i].token_type) {
+					case DECNUM:
+					case HEXNUM:					
+					case REGNAME:
+						sprintf(tokens[nr_token].str, "%.*s", substr_len - 1, substr_start + 1);
+						break;	
+					case '+':
+					case '-':
+					case '*':
+					case '/':
+					case '%':
+					case '(':
+					case ')':
+					case '=':
+					case '<':
+					case '>':
+					case '!':
+					case AND:
+					case OR:
+					case NEG:
+					case REF:
+					case EQ:
+					case NEQ:
+					case LEQ:
+					case GEQ:
+						break;
+					default: 
+						panic("please implement me");
 				}
+				tokens[nr_token].type = rules[i].token_type;
+				nr_token++;
 
 				break;
 			}
@@ -196,11 +142,185 @@ static bool make_token(char *e) {
 			printf("no match at position %d\n%s\n%*.s^\n", position, e, position, "");
 			return false;
 		}
+		if(nr_token > 12800){
+			printf("The expression is too long:\n %s.\n",e);
+			return false;
+}
 	}
 
 	return true; 
 }
+static bool check_parentheses(int p,int q){
+	if(p > q)return 0;
+	int i,left_num=0;
+	for(i = p;i<=q;i++){
+		if(tokens[i].type=='(')
+			left_num++;
+		else if(tokens[i].type==')'){
+			if(left_num > 0)
+				left_num--;
+			else 
+				return false;
+		}
+	}
+	return left_num==0;
+}
+static int computing_priority(int operator){
+	switch(operator){
+		case '+':
+		case '-':
+			return 4;
+		case '*':
+		case '/':
+		case '%':
+			return 3;
+		case '=':
+			return 14;
+		case '<':
+		case '>':
+		case LEQ:
+		case GEQ:
+			return 6;
+		case EQ:
+		case NEQ:
+			return 7;
 
+		case AND:
+			return 11;
+		case OR:
+			return 12;
+		case '!':
+		case NEG:
+		case REF:
+			return 2;
+		case '(':
+			return 1;
+		case ')':
+			return 0;
+		default:
+			return -1;
+	}return -1;
+
+}
+static uint32_t do_operate(uint32_t a, uint32_t b, int operator){
+	switch(operator){
+		case '+':
+			return a + b;
+		case '-':
+			return a - b;
+		case '*':
+			return a * b;
+		case '/':
+			return a / b;
+		case '%':
+			return a % b;
+		case '=':
+			return a = b;
+		case '<':
+			return a < b;
+		case '>':
+			return a > b;
+		case AND:
+			return a && b;
+		case OR:
+			return a || b;
+		case EQ:
+			return a == b;
+		case NEQ:
+			return a != b;
+		case LEQ:
+			return a <= b;
+		case GEQ:
+			return a >= b;
+		default:
+			return -1;
+	}return -1;
+
+}
+static uint32_t eval(int p,int q,bool *success){
+	uint32_t val;
+	if(p > q){
+		panic("Bad Expression");
+		*success = false;	
+	}else if(p == q){
+		switch(tokens[p].type){
+			case DECNUM:
+				sscanf(tokens[p].str,"%u",&val);
+				return val;
+			case HEXNUM:
+				sscanf(tokens[p].str,"%x",&val);
+				return val;
+			case REGNAME:
+				if(!strcmp(tokens[p].str,"eip"))
+					return cpu.eip;
+
+				int i;
+				for(i = 0;i < 8;i++){
+					if(!strcmp(regsl[i],tokens[p].str))
+						return reg_l(i);
+					if(!strcmp(regsw[i],tokens[p].str))
+						return reg_w(i);
+					if(!strcmp(regsb[i],tokens[p].str))
+						return reg_b(i);
+				}
+				
+			default:
+				//	printf("p=%d\n",p);
+				panic("Bad Expression");
+				*success = false; 
+				break;
+		}	 
+
+	}
+	else if(tokens[p].type=='('&&tokens[q].type==')'&&check_parentheses(p + 1,q - 1)){
+		return eval(p + 1,q - 1,success);
+	}
+	else{
+		int i;
+		int left_num = 0;
+		int dom_op = 0,dom_op_priority = -1;
+		for(i = p;i <= q; i++){
+			if(tokens[i].type == '(')
+				left_num++;
+			else if(tokens[i].type == ')')
+				left_num--;
+			else if(!left_num){
+				int priority=computing_priority(tokens[i].type);		
+				if(priority>=dom_op_priority){
+					dom_op=i;
+					dom_op_priority = priority;
+				}
+			}
+		}if(dom_op_priority == 2){
+			val = eval(p+1 , q,success);
+			if(*success){
+				switch(tokens[p].type){
+					case NEG:
+						return -val;
+					case REF:
+						return swaddr_read(val,4);
+					case '!':
+						return !val;
+					default:
+						break;
+				}
+			}
+			panic("Bad Expression");
+			*success = false; 
+
+		}else{
+
+			uint32_t lval = eval(p,dom_op-1,success);
+			if(*success == false){return -1;}
+			uint32_t rval = eval(dom_op + 1, q, success);
+			if(*success == false){return -1;}
+			Assert(!(tokens[dom_op].type == '/' && rval == 0), "divide by 0!");
+			val = do_operate(lval, rval, tokens[dom_op].type);
+			return val;
+		}
+	}
+	return -1;
+}
 uint32_t expr(char *e, bool *success) {
 	if(!make_token(e)) {
 		*success = false;
@@ -208,84 +328,19 @@ uint32_t expr(char *e, bool *success) {
 	}
 
 	/* TODO: Insert codes to evaluate the expression. */
+	if(check_parentheses(0,nr_token-1)){
+		int i;
+		for(i = 0;i < nr_token;i ++){
+			// recognize the unary operator
+			if(tokens[i].type == '-'&&(!i||computing_priority(tokens[i-1].type)>0))
+				tokens[i].type = NEG;
+			else if(tokens[i].type == '*'&&(!i||computing_priority(tokens[i-1].type)>0))
+				tokens[i].type = REF;
+		}
+		uint32_t val = eval(0, nr_token-1, success);
+		if(*success){return val;}	
+	}
+	*success = false;
 	panic("please implement me");
 	return 0;
-}
-
-bool check_parentheses(int p,int q){
-	int a;
-	int j = 0,k = 0;
-	if (tokens[p].type == '('||tokens[q].type == ')'){
-		for(a = p;a <= q;a++)
-			if (tokens[a].type == '('){
-				j++;
-			}
-                        if (tokens[a].type == ')'){
-                                k++;
-                        }
-
-			if (a != q && j == k){
-	
-				return false;
-
-			}
-
-			if (j == k){
-	
-				return true;
-
-			} else {
-	
-				return false;
-                        }
-		}
-	return false;
-}
-
-int dominant_operator(int p,int q){
-	int step = 0;
-	int i;
-	int op = -1;
-	int pri = 0;
-
-	for (i = p;i <= q;i++){
-		if(tokens[i].type == '('){
-			step++;
-		}
-	        if(tokens[i].type == ')'){
-                        step--;
-                }
-
-		if (step == 0){
-			if (tokens[i].type == OR){
-				if (pri < 51){
-					op = i;
-					pri = 51;
-				}
-			}else if(tokens[i].type == AND){
-				if (pri < 50){
-                                        op = i;
-                                        pri = 50;
-                                }
-			}else if(tokens[i].type == EQ||tokens[i].type == NOTEQ){                               if (pri < 49){ 
-				op = i;
-				pri = 49;
-			}
-			}else if(tokens[i].type == '+'||tokens[i].type == '-'){
-				if (pri < 48){
-                                        op = i;
-                                        pri = 48;
-                                }
-			}else if(tokens[i].type == '*'||tokens[i].type == '/'){
-                                if (pri < 46){
-                                        op = i;
-                                        pri = 46;
-                                }
-			}
-			else if (step < 0){
-				return -2;
-			}
-		}
-	}
-	return op;
 }
