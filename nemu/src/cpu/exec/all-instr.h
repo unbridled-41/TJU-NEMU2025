@@ -16,6 +16,7 @@
 #include "arith/sbb.h"
 #include "arith/sub.h"
 #include "arith/add.h"
+#include "arith/adc.h"
 
 #include "control/jmp.h"
 
@@ -49,3 +50,4 @@
 #include "data-mov/push.h"
 #include "data-mov/pop.h"
 #include "data-mov/leave.h"
+#include "data-mov/movext.h"
