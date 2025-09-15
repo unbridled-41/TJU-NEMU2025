@@ -15,8 +15,6 @@
 #include "arith/div.h"
 #include "arith/sbb.h"
 #include "arith/sub.h"
-#include "arith/add.h"
-#include "arith/adc.h"
 
 #include "control/jmp.h"
 
@@ -33,21 +31,8 @@
 #include "string/scas.h"
 #include "string/stos.h"
 #include "string/movs.h"
-#include "logic/test.h"
-#include "logic/setcc.h"
-
-#include "arith/cmp.h"
-#include "arith/sub.h"
 
 #include "misc/misc.h"
 
 #include "special/special.h"
 
-#include "control/call.h"
-#include "control/jcc.h"
-#include "control/ret.h"
-#include "control/jmp.h"
-#include "data-mov/push.h"
-#include "data-mov/pop.h"
-#include "data-mov/leave.h"
-#include "data-mov/movext.h"
