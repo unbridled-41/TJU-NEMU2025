@@ -3,6 +3,7 @@
         "misc.h": "c",
         "movs.h": "c",
         "sub-template.h": "c",
-        "cmp.h": "c"
+        "cmp.h": "c",
+        "sbb.h": "c"
     }
 }
