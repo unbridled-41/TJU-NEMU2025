@@ -12,4 +12,6 @@ make_helper(and_si2rm_v);
 make_helper(and_r2rm_v);
 make_helper(and_rm2r_v);
 
+make_helper(andEAX_i_v);
+
 #endif

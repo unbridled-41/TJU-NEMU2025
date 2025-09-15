@@ -20,5 +20,22 @@ make_instr_helper(si2rm)
 #endif
 make_instr_helper(r2rm)
 make_instr_helper(rm2r)
+#undef instr
 
+#define instr andEAX
+
+static void do_execute() {
+	DATA_TYPE result = REG(0) & op_src->val;
+	REG(0) = result;
+
+	update_eflags_pf_zf_sf((DATA_TYPE_S)result);
+	cpu.eflags.CF = cpu.eflags.OF = 0;
+
+
+	print_asm_template1();
+}
+
+
+make_instr_helper(i)
+#undef instr
 #include "cpu/exec/template-end.h"
