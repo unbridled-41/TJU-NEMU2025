@@ -13,8 +13,6 @@
 #define BANK_WIDTH 3
 #define RANK_WIDTH (27 - COL_WIDTH - ROW_WIDTH - BANK_WIDTH)
 
-static void ddr3_read(hwaddr_t addr, void* data);
-static void ddr3_write(hwaddr_t addr, void* data, uint8_t* mask);
 typedef union {
 	struct {
 		uint32_t col	: COL_WIDTH;
@@ -51,14 +49,6 @@ void init_ddr3() {
 			rowbufs[i][j].valid = false;
 		}
 	}
-}
-
-void ddr3_read_2_cache(hwaddr_t addr, void* data){
-	ddr3_read(addr, data);
-}
-
-void ddr3_write_2_cache(hwaddr_t addr, void* data, uint8_t* mask) {
-	ddr3_write(addr, data, mask);
 }
 
 static void ddr3_read(hwaddr_t addr, void *data) {

@@ -1,5 +1,5 @@
 #include "nemu.h"
-#include "memory/cache.h"
+
 #define ENTRY_START 0x100000
 
 extern uint8_t entry [];
@@ -10,29 +10,19 @@ void load_elf_tables(int, char *[]);
 void init_regex();
 void init_wp_pool();
 void init_ddr3();
-void init_tlb();
+
 FILE *log_fp = NULL;
 
 static void init_log() {
 	log_fp = fopen("log.txt", "w");
 	Assert(log_fp, "Can not open 'log.txt'");
 }
-
+/*
 static void welcome() {
 	printf("Welcome to NEMU!\nThe executable is %s.\nFor help, type \"help\"\n",
 			exec_file);
 }
-
-static void init_cr0() {
-	cpu.cr0.protect_enable = 0; // 实模式
-	cpu.cr0.paging = 0;			// 不分页
-}
-
-static void init_cs() {
-	cpu.CS.base = 0, cpu.CS.limit = 0xffffffff;
-}
-
-
+*/
 void init_monitor(int argc, char *argv[]) {
 	/* Perform some global initialization */
 
@@ -49,7 +39,7 @@ void init_monitor(int argc, char *argv[]) {
 	init_wp_pool();
 
 	/* Display welcome message. */
-	welcome();
+//	welcome();
 }
 
 #ifdef USE_RAMDISK
@@ -93,13 +83,10 @@ void restart() {
 
 	/* Read the entry code into memory. */
 	load_entry();
+
 	/* Set the initial instruction pointer. */
 	cpu.eip = ENTRY_START;
-	cpu.eflags.val = 2;//init_eflags();
-	init_cache();
-	init_cr0();
-	init_cs();
-	init_tlb();
+
 	/* Initialize DRAM. */
 	init_ddr3();
 }

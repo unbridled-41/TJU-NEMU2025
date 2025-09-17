@@ -2,13 +2,10 @@
 #define __REG_H__
 
 #include "common.h"
-#include "../../lib-common/x86-inc/cpu.h"
-#include "../../lib-common/x86-inc/mmu.h"
 
 enum { R_EAX, R_ECX, R_EDX, R_EBX, R_ESP, R_EBP, R_ESI, R_EDI };
 enum { R_AX, R_CX, R_DX, R_BX, R_SP, R_BP, R_SI, R_DI };
 enum { R_AL, R_CL, R_DL, R_BL, R_AH, R_CH, R_DH, R_BH };
-enum { R_CS, R_DS, R_SS, R_ES };
 
 /* TODO: Re-organize the `CPU_state' structure to match the register
  * encoding scheme in i386 instruction format. For example, if we
@@ -18,31 +15,21 @@ enum { R_CS, R_DS, R_SS, R_ES };
  */
 
 typedef struct {
-	uint16_t selector;				
-	uint32_t base;    // base address
-	uint32_t limit;  //length (base + limit = segment size)
-	uint32_t type;	// type (is read or write or excutive)
-} S_reg;
+	union{
+		union {
+			uint32_t _32;
+			uint16_t _16;
+			uint8_t _8[2];
+		} gpr[8];
 
-typedef struct {
-    union{
-        union{
-		   uint32_t _32;
-		   uint16_t _16;
-		   uint8_t _8[2];
-	   }gpr[8];
+		/* Do NOT change the order of the GPRs' definitions. */
+		struct{
+			uint32_t eax, ecx, edx, ebx, esp, ebp, esi, edi;
+		};
+	};
+	swaddr_t eip;
 
-/* Do NOT change the order of the GPRs' definitions. */
-
-        struct{
-            uint32_t eax, ecx, edx, ebx, esp, ebp, esi, edi;
-        };
-    };
-
-     swaddr_t eip;
-     
-
-     union {
+	union {
 		struct {
 			uint32_t CF		:1;
 			uint32_t pad0	:1;
@@ -64,52 +51,9 @@ typedef struct {
 		uint32_t val;
 	} eflags;
 
-	 union { 
-		 struct {
-			 S_reg sreg[4];	
-		 };
-		 struct {
-			 S_reg CS, DS, SS, ES;	
-		 };
-	 };
-	 struct {
-		 uint32_t base;
-		 uint32_t limit;	
-	 } GDTR;
-	 CR0 cr0;
-	 CR3 cr3;
-
-
 } CPU_state;
 
 extern CPU_state cpu;
-
-typedef struct {
-	union {
-		struct {
-			uint16_t lim1, b1;
-		};
-		uint32_t p1;
-	};
-	union {
-		struct {
-      uint32_t b2:		8; //base address
-      uint32_t a:			1; //is access
-      uint32_t type:		3; //type
-      uint32_t s:			1; //is data OR code segment
-      uint32_t dpl:		2; //privilage
-      uint32_t p:			1;  // is exist
-      uint32_t lim2:	4;  //limit (segment length - 1)
-      uint32_t avl:		1; //user
-      uint32_t :			1; //32bit
-      uint32_t x:			1; //16bit
-      uint32_t g:			1; // page unit or byte unit (0 == 1 byte, 1 == 4kb)
-      uint32_t b3:		8; //base address
-	};
-	  uint32_t p2;
-	};
-}Sreg_info;	
-Sreg_info sreg_info;
 
 static inline int check_reg_index(int index) {
 	assert(index >= 0 && index < 8);
@@ -123,7 +67,5 @@ static inline int check_reg_index(int index) {
 extern const char* regsl[];
 extern const char* regsw[];
 extern const char* regsb[];
-
-void sreg_set(uint8_t);
 
 #endif
