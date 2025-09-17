@@ -1,0 +1,166 @@
+  100000:   b8 00 00 00 00                        movl $0x0,%eax
+  100005:   bb 00 00 00 00                        movl $0x0,%ebx
+  10000a:   b9 00 00 00 00                        movl $0x0,%ecx
+  10000f:   ba 00 00 00 00                        movl $0x0,%edx
+  100014:   b9 00 80 00 00                        movl $0x8000,%ecx
+  100019:   66 bb 00 00                           movw $0x0,%bx
+  10001d:   b7 00                                 movb $0x0,%bh
+  10001f:   c7 05 34 12 00 00 01 00 00 00         movl $0x1,0x1234
+  100029:   66 c7 05 34 12 00 00 01 00            movw $0x1,0x1234
+  100032:   c6 05 34 12 00 00 01                  movb $0x1,0x1234
+  100039:   c7 01 01 00 00 00                     movl $0x1,(%ecx)
+  10003f:   66 c7 01 01 00                        movw $0x1,(%ecx)
+  100044:   c6 01 01                              movb $0x1,(%ecx)
+  100047:   c7 04 99 01 00 00 00                  movl $0x1,(%ecx,%ebx,4)
+  10004e:   66 c7 04 99 01 00                     movw $0x1,(%ecx,%ebx,4)
+  100054:   c6 04 99 01                           movb $0x1,(%ecx,%ebx,4)
+  100058:   c7 41 02 01 00 00 00                  movl $0x1,0x2(%ecx)
+  10005f:   66 c7 41 02 01 00                     movw $0x1,0x2(%ecx)
+  100065:   c6 41 02 01                           movb $0x1,0x2(%ecx)
+  100069:   c7 41 fe 01 00 00 00                  movl $0x1,-0x2(%ecx)
+  100070:   66 c7 41 fe 01 00                     movw $0x1,-0x2(%ecx)
+  100076:   c6 41 fe 01                           movb $0x1,-0x2(%ecx)
+  10007a:   c7 44 99 02 01 00 00 00               movl $0x1,0x2(%ecx,%ebx,4)
+  100082:   66 c7 44 99 02 01 00                  movw $0x1,0x2(%ecx,%ebx,4)
+  100089:   c6 44 99 02 01                        movb $0x1,0x2(%ecx,%ebx,4)
+  10008e:   c7 44 99 fe 01 00 00 00               movl $0x1,-0x2(%ecx,%ebx,4)
+  100096:   66 c7 44 99 fe 01 00                  movw $0x1,-0x2(%ecx,%ebx,4)
+  10009d:   c6 44 99 fe 01                        movb $0x1,-0x2(%ecx,%ebx,4)
+  1000a2:   c7 81 00 20 00 00 01 00 00 00         movl $0x1,0x2000(%ecx)
+  1000ac:   66 c7 81 00 20 00 00 01 00            movw $0x1,0x2000(%ecx)
+  1000b5:   c6 81 00 20 00 00 01                  movb $0x1,0x2000(%ecx)
+  1000bc:   c7 81 00 e0 ff ff 01 00 00 00         movl $0x1,-0x2000(%ecx)
+  1000c6:   66 c7 81 00 e0 ff ff 01 00            movw $0x1,-0x2000(%ecx)
+  1000cf:   c6 81 00 e0 ff ff 01                  movb $0x1,-0x2000(%ecx)
+  1000d6:   c7 84 99 00 20 00 00 01 00 00 00      movl $0x1,0x2000(%ecx,%ebx,4)
+  1000e1:   66 c7 84 99 00 20 00 00 01 00         movw $0x1,0x2000(%ecx,%ebx,4)
+  1000eb:   c6 84 99 00 20 00 00 01               movb $0x1,0x2000(%ecx,%ebx,4)
+  1000f3:   c7 84 99 00 e0 ff ff 01 00 00 00      movl $0x1,-0x2000(%ecx,%ebx,4)
+  1000fe:   66 c7 84 99 00 e0 ff ff 01 00         movw $0x1,-0x2000(%ecx,%ebx,4)
+  100108:   c6 84 99 00 e0 ff ff 01               movb $0x1,-0x2000(%ecx,%ebx,4)
+  100110:   89 c3                                 movl %eax,%ebx
+  100112:   66 89 c3                              movw %ax,%bx
+  100115:   88 e3                                 movb %ah,%bl
+  100117:   a3 34 12 00 00                        movl %eax,0x1234
+  10011c:   66 a3 34 12 00 00                     movw %ax,0x1234
+  100122:   a2 34 12 00 00                        movb %al,0x1234
+  100127:   88 25 34 12 00 00                     movb %ah,0x1234
+  10012d:   89 03                                 movl %eax,(%ebx)
+  10012f:   89 04 99                              movl %eax,(%ecx,%ebx,4)
+  100132:   66 89 04 99                           movw %ax,(%ecx,%ebx,4)
+  100136:   88 24 99                              movb %ah,(%ecx,%ebx,4)
+  100139:   89 41 02                              movl %eax,0x2(%ecx)
+  10013c:   66 89 41 02                           movw %ax,0x2(%ecx)
+  100140:   88 61 02                              movb %ah,0x2(%ecx)
+  100143:   89 44 99 02                           movl %eax,0x2(%ecx,%ebx,4)
+  100147:   66 89 44 99 02                        movw %ax,0x2(%ecx,%ebx,4)
+  10014c:   88 64 99 02                           movb %ah,0x2(%ecx,%ebx,4)
+  100150:   89 81 00 20 00 00                     movl %eax,0x2000(%ecx)
+  100156:   66 89 81 00 20 00 00                  movw %ax,0x2000(%ecx)
+  10015d:   88 a1 00 20 00 00                     movb %ah,0x2000(%ecx)
+  100163:   89 84 99 00 20 00 00                  movl %eax,0x2000(%ecx,%ebx,4)
+  10016a:   66 89 84 99 00 20 00 00               movw %ax,0x2000(%ecx,%ebx,4)
+  100172:   88 a4 99 00 20 00 00                  movb %ah,0x2000(%ecx,%ebx,4)
+  100179:   89 d3                                 movl %edx,%ebx
+  10017b:   66 89 d3                              movw %dx,%bx
+  10017e:   88 f3                                 movb %dh,%bl
+  100180:   89 15 34 12 00 00                     movl %edx,0x1234
+  100186:   66 89 15 34 12 00 00                  movw %dx,0x1234
+  10018d:   88 15 34 12 00 00                     movb %dl,0x1234
+  100193:   88 35 34 12 00 00                     movb %dh,0x1234
+  100199:   89 13                                 movl %edx,(%ebx)
+  10019b:   89 14 99                              movl %edx,(%ecx,%ebx,4)
+  10019e:   66 89 14 99                           movw %dx,(%ecx,%ebx,4)
+  1001a2:   88 34 99                              movb %dh,(%ecx,%ebx,4)
+  1001a5:   89 51 02                              movl %edx,0x2(%ecx)
+  1001a8:   66 89 51 02                           movw %dx,0x2(%ecx)
+  1001ac:   88 71 02                              movb %dh,0x2(%ecx)
+  1001af:   89 54 99 02                           movl %edx,0x2(%ecx,%ebx,4)
+  1001b3:   66 89 54 99 02                        movw %dx,0x2(%ecx,%ebx,4)
+  1001b8:   88 74 99 02                           movb %dh,0x2(%ecx,%ebx,4)
+  1001bc:   89 91 00 20 00 00                     movl %edx,0x2000(%ecx)
+  1001c2:   66 89 91 00 20 00 00                  movw %dx,0x2000(%ecx)
+  1001c9:   88 b1 00 20 00 00                     movb %dh,0x2000(%ecx)
+  1001cf:   89 94 99 00 20 00 00                  movl %edx,0x2000(%ecx,%ebx,4)
+  1001d6:   66 89 94 99 00 20 00 00               movw %dx,0x2000(%ecx,%ebx,4)
+  1001de:   88 b4 99 00 20 00 00                  movb %dh,0x2000(%ecx,%ebx,4)
+  1001e5:   a1 34 12 00 00                        movl 0x1234,%eax
+  1001ea:   66 a1 34 12 00 00                     movw 0x1234,%ax
+  1001f0:   a0 34 12 00 00                        movb 0x1234,%al
+  1001f5:   8a 25 34 12 00 00                     movb 0x1234,%ah
+  1001fb:   8b 03                                 movl (%ebx),%eax
+  1001fd:   8b 04 99                              movl (%ecx,%ebx,4),%eax
+  100200:   66 8b 04 99                           movw (%ecx,%ebx,4),%ax
+  100204:   8a 24 99                              movb (%ecx,%ebx,4),%ah
+  100207:   8b 41 02                              movl 0x2(%ecx),%eax
+  10020a:   66 8b 41 02                           movw 0x2(%ecx),%ax
+  10020e:   8a 61 02                              movb 0x2(%ecx),%ah
+  100211:   8b 44 99 02                           movl 0x2(%ecx,%ebx,4),%eax
+  100215:   66 8b 44 99 02                        movw 0x2(%ecx,%ebx,4),%ax
+  10021a:   8a 64 99 02                           movb 0x2(%ecx,%ebx,4),%ah
+[nemu/src/monitor/debug/expr.c,95,make_token] match rules[18] = "0x[0-9a-fA-F]{1,10}" at position 0 with len 6: 0x1234
+[nemu/src/monitor/debug/expr.c,95,make_token] match rules[18] = "0x[0-9a-fA-F]{1,10}" at position 0 with len 10: 0xc0100000
+[nemu/src/monitor/debug/expr.c,95,make_token] match rules[0] = " +" at position 10 with len 1:  
+[nemu/src/monitor/debug/expr.c,95,make_token] match rules[2] = "\-" at position 11 with len 1: -
+[nemu/src/monitor/debug/expr.c,95,make_token] match rules[0] = " +" at position 12 with len 1:  
+[nemu/src/monitor/debug/expr.c,95,make_token] match rules[6] = "\(" at position 13 with len 1: (
+[nemu/src/monitor/debug/expr.c,95,make_token] match rules[6] = "\(" at position 14 with len 1: (
+[nemu/src/monitor/debug/expr.c,95,make_token] match rules[20] = "\$[a-z]{2,3}" at position 15 with len 4: $edx
+[nemu/src/monitor/debug/expr.c,95,make_token] match rules[1] = "\+" at position 19 with len 1: +
+[nemu/src/monitor/debug/expr.c,95,make_token] match rules[18] = "0x[0-9a-fA-F]{1,10}" at position 20 with len 6: 0x1234
+[nemu/src/monitor/debug/expr.c,95,make_token] match rules[2] = "\-" at position 26 with len 1: -
+[nemu/src/monitor/debug/expr.c,95,make_token] match rules[19] = "[0-9]{1,10}" at position 27 with len 2: 10
+[nemu/src/monitor/debug/expr.c,95,make_token] match rules[7] = "\)" at position 29 with len 1: )
+[nemu/src/monitor/debug/expr.c,95,make_token] match rules[0] = " +" at position 30 with len 1:  
+[nemu/src/monitor/debug/expr.c,95,make_token] match rules[3] = "\*" at position 31 with len 1: *
+[nemu/src/monitor/debug/expr.c,95,make_token] match rules[0] = " +" at position 32 with len 1:  
+[nemu/src/monitor/debug/expr.c,95,make_token] match rules[19] = "[0-9]{1,10}" at position 33 with len 2: 16
+[nemu/src/monitor/debug/expr.c,95,make_token] match rules[7] = "\)" at position 35 with len 1: )
+[nemu/src/monitor/debug/expr.c,95,make_token] match rules[0] = " +" at position 36 with len 1:  
+[nemu/src/monitor/debug/expr.c,95,make_token] match rules[4] = "\/" at position 37 with len 1: /
+[nemu/src/monitor/debug/expr.c,95,make_token] match rules[0] = " +" at position 38 with len 1:  
+[nemu/src/monitor/debug/expr.c,95,make_token] match rules[19] = "[0-9]{1,10}" at position 39 with len 1: 4
+[nemu/src/monitor/debug/expr.c,95,make_token] match rules[6] = "\(" at position 0 with len 1: (
+[nemu/src/monitor/debug/expr.c,95,make_token] match rules[15] = "\!" at position 1 with len 1: !
+[nemu/src/monitor/debug/expr.c,95,make_token] match rules[6] = "\(" at position 2 with len 1: (
+[nemu/src/monitor/debug/expr.c,95,make_token] match rules[20] = "\$[a-z]{2,3}" at position 3 with len 4: $ecx
+[nemu/src/monitor/debug/expr.c,95,make_token] match rules[0] = " +" at position 7 with len 1:  
+[nemu/src/monitor/debug/expr.c,95,make_token] match rules[13] = "!=" at position 8 with len 2: !=
+[nemu/src/monitor/debug/expr.c,95,make_token] match rules[0] = " +" at position 10 with len 1:  
+[nemu/src/monitor/debug/expr.c,95,make_token] match rules[18] = "0x[0-9a-fA-F]{1,10}" at position 11 with len 10: 0x00008000
+[nemu/src/monitor/debug/expr.c,95,make_token] match rules[7] = "\)" at position 21 with len 1: )
+[nemu/src/monitor/debug/expr.c,95,make_token] match rules[0] = " +" at position 22 with len 1:  
+[nemu/src/monitor/debug/expr.c,95,make_token] match rules[16] = "\&\&" at position 23 with len 2: &&
+[nemu/src/monitor/debug/expr.c,95,make_token] match rules[0] = " +" at position 25 with len 1:  
+[nemu/src/monitor/debug/expr.c,95,make_token] match rules[6] = "\(" at position 26 with len 1: (
+[nemu/src/monitor/debug/expr.c,95,make_token] match rules[20] = "\$[a-z]{2,3}" at position 27 with len 4: $eax
+[nemu/src/monitor/debug/expr.c,95,make_token] match rules[0] = " +" at position 31 with len 1:  
+[nemu/src/monitor/debug/expr.c,95,make_token] match rules[8] = "==" at position 32 with len 2: ==
+[nemu/src/monitor/debug/expr.c,95,make_token] match rules[0] = " +" at position 34 with len 1:  
+[nemu/src/monitor/debug/expr.c,95,make_token] match rules[18] = "0x[0-9a-fA-F]{1,10}" at position 35 with len 10: 0x00000000
+[nemu/src/monitor/debug/expr.c,95,make_token] match rules[7] = "\)" at position 45 with len 1: )
+[nemu/src/monitor/debug/expr.c,95,make_token] match rules[7] = "\)" at position 46 with len 1: )
+[nemu/src/monitor/debug/expr.c,95,make_token] match rules[0] = " +" at position 47 with len 1:  
+[nemu/src/monitor/debug/expr.c,95,make_token] match rules[1] = "\+" at position 48 with len 1: +
+[nemu/src/monitor/debug/expr.c,95,make_token] match rules[0] = " +" at position 49 with len 1:  
+[nemu/src/monitor/debug/expr.c,95,make_token] match rules[18] = "0x[0-9a-fA-F]{1,10}" at position 50 with len 10: 0x12345678
+[nemu/src/monitor/debug/expr.c,95,make_token] match rules[2] = "\-" at position 0 with len 1: -
+[nemu/src/monitor/debug/expr.c,95,make_token] match rules[19] = "[0-9]{1,10}" at position 1 with len 1: 5
+[nemu/src/monitor/debug/expr.c,95,make_token] match rules[0] = " +" at position 2 with len 1:  
+[nemu/src/monitor/debug/expr.c,95,make_token] match rules[1] = "\+" at position 3 with len 1: +
+[nemu/src/monitor/debug/expr.c,95,make_token] match rules[0] = " +" at position 4 with len 1:  
+[nemu/src/monitor/debug/expr.c,95,make_token] match rules[3] = "\*" at position 5 with len 1: *
+[nemu/src/monitor/debug/expr.c,95,make_token] match rules[6] = "\(" at position 6 with len 1: (
+[nemu/src/monitor/debug/expr.c,95,make_token] match rules[20] = "\$[a-z]{2,3}" at position 7 with len 4: $eip
+[nemu/src/monitor/debug/expr.c,95,make_token] match rules[7] = "\)" at position 11 with len 1: )
+[nemu/src/monitor/debug/expr.c,95,make_token] match rules[6] = "\(" at position 0 with len 1: (
+[nemu/src/monitor/debug/expr.c,95,make_token] match rules[20] = "\$[a-z]{2,3}" at position 1 with len 4: $eip
+[nemu/src/monitor/debug/expr.c,95,make_token] match rules[8] = "==" at position 5 with len 2: ==
+[nemu/src/monitor/debug/expr.c,95,make_token] match rules[18] = "0x[0-9a-fA-F]{1,10}" at position 7 with len 8: 0x100224
+[nemu/src/monitor/debug/expr.c,95,make_token] match rules[7] = "\)" at position 15 with len 1: )
+  10021e:   8b 81 00 20 00 00                     movl 0x2000(%ecx),%eax
+[nemu/src/monitor/debug/expr.c,95,make_token] match rules[6] = "\(" at position 0 with len 1: (
+[nemu/src/monitor/debug/expr.c,95,make_token] match rules[20] = "\$[a-z]{2,3}" at position 1 with len 4: $eip
+[nemu/src/monitor/debug/expr.c,95,make_token] match rules[8] = "==" at position 5 with len 2: ==
+[nemu/src/monitor/debug/expr.c,95,make_token] match rules[18] = "0x[0-9a-fA-F]{1,10}" at position 7 with len 8: 0x100224
+[nemu/src/monitor/debug/expr.c,95,make_token] match rules[7] = "\)" at position 15 with len 1: )
