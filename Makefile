@@ -72,4 +72,4 @@ test: $(nemu_BIN) $(testcase_BIN) entry
 	bash test.sh $(testcase_BIN)
 
 submit: clean
-	cd .. && zip -r $(STU_ID).zip $(shell pwd | grep -o '[^/]*$$')
+	cd .. && zip -r $(STU_ID).zip $(shell pwd | grep -o '[^/]*$$') -x "*/.git/*" "*/.gitignore" "*/.gitmodules"
