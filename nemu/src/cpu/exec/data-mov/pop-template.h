@@ -10,6 +10,7 @@ static void do_execute() {
 	      swaddr_write(op_src->addr,DATA_BYTE, val);
 	else 
 	      assert(0);
+    OPERAND_W(op_src, MEM_R(cpu.esp));
 	cpu.esp += DATA_BYTE;
 	print_asm_template1();
 }
