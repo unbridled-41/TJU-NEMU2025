@@ -6,7 +6,8 @@ obj/nemu/cpu/exec/exec.o: nemu/src/cpu/exec/exec.c \
  nemu/include/cpu/decode/modrm.h nemu/src/cpu/exec/all-instr.h \
  nemu/src/cpu/exec/prefix/prefix.h nemu/src/cpu/exec/data-mov/mov.h \
  nemu/src/cpu/exec/data-mov/xchg.h nemu/src/cpu/exec/data-mov/movext.h \
- nemu/src/cpu/exec/data-mov/cltd.h nemu/src/cpu/exec/arith/adc.h \
+ nemu/src/cpu/exec/data-mov/cltd.h nemu/src/cpu/exec/data-mov/push.h \
+ nemu/src/cpu/exec/data-mov/pop.h nemu/src/cpu/exec/arith/adc.h \
  nemu/src/cpu/exec/arith/dec.h nemu/src/cpu/exec/arith/inc.h \
  nemu/src/cpu/exec/arith/neg.h nemu/src/cpu/exec/arith/imul.h \
  nemu/src/cpu/exec/arith/mul.h nemu/src/cpu/exec/arith/idiv.h \
