@@ -6,6 +6,7 @@
         "cmp.h": "c",
         "sbb.h": "c",
         "leave.h": "c",
-        "special.h": "c"
+        "special.h": "c",
+        "push-template.h": "c"
     }
 }
