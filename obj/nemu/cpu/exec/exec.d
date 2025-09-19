@@ -13,10 +13,11 @@ obj/nemu/cpu/exec/exec.o: nemu/src/cpu/exec/exec.c \
  nemu/src/cpu/exec/arith/mul.h nemu/src/cpu/exec/arith/idiv.h \
  nemu/src/cpu/exec/arith/div.h nemu/src/cpu/exec/arith/sbb.h \
  nemu/src/cpu/exec/arith/sub.h nemu/src/cpu/exec/control/jmp.h \
- nemu/src/cpu/exec/logic/and.h nemu/src/cpu/exec/logic/or.h \
- nemu/src/cpu/exec/logic/not.h nemu/src/cpu/exec/logic/xor.h \
- nemu/src/cpu/exec/logic/sar.h nemu/src/cpu/exec/logic/shl.h \
- nemu/src/cpu/exec/logic/shr.h nemu/src/cpu/exec/logic/shrd.h \
- nemu/src/cpu/exec/string/rep.h nemu/src/cpu/exec/string/scas.h \
- nemu/src/cpu/exec/string/stos.h nemu/src/cpu/exec/string/movs.h \
- nemu/src/cpu/exec/misc/misc.h nemu/src/cpu/exec/special/special.h
+ nemu/src/cpu/exec/control/call.h nemu/src/cpu/exec/logic/and.h \
+ nemu/src/cpu/exec/logic/or.h nemu/src/cpu/exec/logic/not.h \
+ nemu/src/cpu/exec/logic/xor.h nemu/src/cpu/exec/logic/sar.h \
+ nemu/src/cpu/exec/logic/shl.h nemu/src/cpu/exec/logic/shr.h \
+ nemu/src/cpu/exec/logic/shrd.h nemu/src/cpu/exec/string/rep.h \
+ nemu/src/cpu/exec/string/scas.h nemu/src/cpu/exec/string/stos.h \
+ nemu/src/cpu/exec/string/movs.h nemu/src/cpu/exec/misc/misc.h \
+ nemu/src/cpu/exec/special/special.h
