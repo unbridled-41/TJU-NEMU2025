@@ -41,7 +41,7 @@ make_helper(concat(decode_si_, SUFFIX)) {
 	op_src->val = op_src->simm;
 
 #ifdef DEBUG
-	snprintf(op_src->str, OP_STR_SIZE, "$0x%x", op_src->val);
+	snprintf(op_src->str, OP_STR_SIZE, "$%d", op_src->simm);
 #endif
 	return DATA_BYTE;
 }
