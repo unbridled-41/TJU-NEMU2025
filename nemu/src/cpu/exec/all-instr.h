@@ -21,6 +21,7 @@
 
 
 #include "control/jmp.h"
+#include "control/jcc.h"
 #include "control/call.h"
 #include "control/ret.h"
 
