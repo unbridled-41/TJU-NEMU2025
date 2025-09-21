@@ -12,7 +12,7 @@
 #define make_jcc_helper(cond, name) \
 	static void concat4(do_j, name, _, SUFFIX)(){ \
 	if(!(cond))return ; \
-	cpu.eip += op_src->val; \
+	cpu.eip += op_src->simm; \
 	print_asm("j" str(name) " %x", cpu.eip + 1 + DATA_BYTE); \
 } \
 make_helper(concat4(j, name, _, SUFFIX)){ \
