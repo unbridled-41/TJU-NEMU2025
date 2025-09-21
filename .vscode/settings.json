@@ -8,6 +8,7 @@
         "leave.h": "c",
         "special.h": "c",
         "push-template.h": "c",
-        "jmp.h": "c"
+        "jmp.h": "c",
+        "sbb-template.h": "c"
     }
 }
