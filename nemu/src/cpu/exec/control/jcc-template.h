@@ -36,6 +36,7 @@ make_jcc_helper(!SF,ns)
 make_jcc_helper(OF,o)
 make_jcc_helper(PF,p)
 make_jcc_helper(SF,s)
+
 #if DATA_BYTE == 4
 
 #undef ZF
