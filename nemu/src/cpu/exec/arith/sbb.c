@@ -1,5 +1,9 @@
 #include "cpu/exec/helper.h"
 
+#define DATA_BYTE 1
+#include "sbb-template.h"
+#undef DATA_BYTE
+
 
 #define DATA_BYTE 2
 #include "sbb-template.h"
