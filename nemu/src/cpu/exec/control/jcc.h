@@ -7,7 +7,6 @@ make_helper(jb_b);
 make_helper(jbe_b);
 make_helper(jecxz_b);
 make_helper(je_b);
-make_helper(je_v);
 make_helper(jg_b);
 make_helper(jge_b);
 make_helper(jl_b);

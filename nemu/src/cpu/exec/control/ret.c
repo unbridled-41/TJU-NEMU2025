@@ -6,5 +6,6 @@ make_helper(ret) {
 	cpu.eip = addr;
 	cpu.esp += 4;
 	print_asm("ret");
+	//  ret 0 to cpu-exec
 	return 0;
 }
