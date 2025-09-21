@@ -197,6 +197,7 @@ static int computing_priority(int operator){
 		case REF:
 			return 2;
 		case '(':
+		    return 0;
 		case ')':
 			return 1;
 		default:
@@ -333,9 +334,9 @@ uint32_t expr(char *e, bool *success) {
 		int i;
 		for(i = 0;i < nr_token;i ++){
 			// recognize the unary operator
-			if(tokens[i].type == '-'&&(!i||computing_priority(tokens[i-1].type)>1))
+			if(tokens[i].type == '-'&&(!i||computing_priority(tokens[i-1].type)>0))
 				tokens[i].type = NEG;
-			else if(tokens[i].type == '*'&&(!i||computing_priority(tokens[i-1].type)>1))
+			else if(tokens[i].type == '*'&&(!i||computing_priority(tokens[i-1].type)>0))
 				tokens[i].type = REF;
 		}
 		uint32_t val = eval(0, nr_token-1, success);
