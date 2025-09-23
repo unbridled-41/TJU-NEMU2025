@@ -242,7 +242,6 @@ static uint32_t do_operate(uint32_t a, uint32_t b, int operator){
 }
 static uint32_t eval(int p,int q,bool *success){
 	uint32_t val;
-	printf("%d,%d\n",p,q);
 	if(p > q){
 		panic("Bad Expression");
 		*success = false;	
