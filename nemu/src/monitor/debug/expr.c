@@ -197,9 +197,9 @@ static int computing_priority(int operator){
 		case REF:
 			return 2;
 		case '(':
-		    return 0;
-		case ')':
 			return 1;
+		case ')':
+			return 0;
 		default:
 			return -1;
 	}return -1;
