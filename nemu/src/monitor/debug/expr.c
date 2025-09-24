@@ -11,7 +11,7 @@ enum {
 	AND, OR,
 	NEG, REF,
 	DECNUM, HEXNUM,
-	REGNAME,
+	REGNAME, OBJECT,
 	/* TODO: Add more token types */
 
 };
@@ -47,6 +47,7 @@ static struct rule {
 	{"0x[0-9a-fA-F]{1,10}", HEXNUM},
 	{"[0-9]{1,10}", DECNUM},
 	{"\\$[a-z]{2,3}", REGNAME},
+	{"[a-zA-Z_][a-zA-Z0-9_]+", OBJECT},
 };
 
 #define NR_REGEX (sizeof(rules) / sizeof(rules[0]) )
@@ -105,6 +106,7 @@ static bool make_token(char *e) {
 				switch(rules[i].token_type) {
 					case DECNUM:
 					case HEXNUM:
+					case OBJECT:
 						ret = sprintf(tokens[nr_token].str, "%.*s", substr_len, substr_start);
 						Assert(ret == substr_len, "Numeric constant too large.");
 						break;					
@@ -266,12 +268,15 @@ static uint32_t eval(int p,int q,bool *success){
 					if(!strcmp(regsb[i],tokens[p].str))
 						return reg_b(i);
 				}
-			default:
-				//	printf("p=%d\n",p);
-				panic("Bad Expression");
-				*success = false; 
+				break;	
+			case OBJECT:
+				// TODO:
 				break;
-		}	
+			default:
+				break;
+		}		panic("Bad Expression");
+				*success = false; 
+
 	}
 	else if(tokens[p].type=='('&&tokens[q].type==')'&&check_parentheses(p + 1,q - 1)){
 		return eval(p + 1,q - 1,success);
