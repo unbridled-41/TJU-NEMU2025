@@ -3,9 +3,10 @@
 #define instr push
 
 static void do_execute() {
-	cpu.esp -= DATA_BYTE; 
-	swaddr_write(cpu.esp, DATA_BYTE, op_src->val);
-	print_asm_template1();	
+	// must be 4 
+	cpu.esp -= 4; 
+    swaddr_write(cpu.esp, 4, op_src->val);	
+    print_asm_template1();	
 }
 
 #if DATA_BYTE == 2 || DATA_BYTE == 4
