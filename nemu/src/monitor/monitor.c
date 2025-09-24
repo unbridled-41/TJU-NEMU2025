@@ -17,12 +17,12 @@ static void init_log() {
 	log_fp = fopen("log.txt", "w");
 	Assert(log_fp, "Can not open 'log.txt'");
 }
-/*
+
 static void welcome() {
 	printf("Welcome to NEMU!\nThe executable is %s.\nFor help, type \"help\"\n",
 			exec_file);
 }
-*/
+
 void init_monitor(int argc, char *argv[]) {
 	/* Perform some global initialization */
 
@@ -39,7 +39,7 @@ void init_monitor(int argc, char *argv[]) {
 	init_wp_pool();
 
 	/* Display welcome message. */
-//	welcome();
+	welcome();
 }
 
 #ifdef USE_RAMDISK
