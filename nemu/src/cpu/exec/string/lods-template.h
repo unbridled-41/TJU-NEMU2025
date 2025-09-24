@@ -3,9 +3,8 @@
 #define instr lods
 
 make_helper(concat(lods_, SUFFIX)) {
-	MEM_W(cpu.eax, MEM_R(cpu.esi));
+	REG(R_EAX) =  MEM_R(cpu.esi);
 	cpu.esi += (cpu.eflags.DF ? -DATA_BYTE : DATA_BYTE);
-	cpu.eax += (cpu.eflags.DF ? -DATA_BYTE : DATA_BYTE);
 
 	print_asm("lods" str(SUFFIX) " %%ds:(%%esi),%%es:(%%edi)");
 	return 1;
