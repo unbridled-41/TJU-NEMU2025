@@ -270,7 +270,10 @@ static uint32_t eval(int p,int q,bool *success){
 				}
 				break;	
 			case OBJECT:
-				// TODO:
+				assert(1);
+				extern swaddr_t find_elf_object(char *);
+				val = find_elf_object(tokens[p].str);
+				Assert(val!=0, "The object don't exist!");
 				break;
 			default:
 				break;
