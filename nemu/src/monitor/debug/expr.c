@@ -274,6 +274,7 @@ static uint32_t eval(int p,int q,bool *success){
 			case OBJECT:
 				val = find_elf_object(tokens[p].str);
 				Assert(val!=0, "The object don't exist!");
+				return val;
 				break;
 			default:
 				break;
