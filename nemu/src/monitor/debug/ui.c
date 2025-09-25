@@ -53,7 +53,7 @@ static int cmd_w(char *args);
 
 static int cmd_d(char *args);
 
-//static int cmd_bt(char *args);
+static int cmd_bt(char *args);
 
 static struct {
 	char *name;
@@ -69,6 +69,7 @@ static struct {
 	{ "p", "Print value of the expression", cmd_p},
 	{ "w", "Set a watchpoint for an expression.", cmd_w},
 	{ "d", "Delete a watchpoint.", cmd_d},
+	{ "bt", "Print backtrace of all stack frames.", cmd_bt},
 	/* TODO: Add more commands */
 
 };
@@ -200,6 +201,10 @@ static int cmd_d(char *args){
 		return 0;
 	}
 	delete_wp(no);	
+	return 0;
+}
+static int cmd_bt(char *args){
+	
 	return 0;
 }
 void ui_mainloop() {
