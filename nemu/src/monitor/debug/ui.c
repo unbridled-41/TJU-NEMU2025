@@ -9,6 +9,8 @@
 
 void cpu_exec(uint32_t);
 
+char *in_which_func(swaddr_t addr);
+
 /* We use the `readline' library to provide more flexibility to read from stdin. */
 char* rl_gets() {
 	static	char *line_read = NULL;
@@ -204,7 +206,25 @@ static int cmd_d(char *args){
 	return 0;
 }
 static int cmd_bt(char *args){
-	
+	if(!cpu.ebp){
+		printf("No stack.");
+	}
+	else{
+		swaddr_t ebp_now = 0;
+		swaddr_t ebp_last = cpu.ebp;
+		swaddr_t ret_addr = 0;
+		int nr_frame = 1;
+		printf("#0 %s arg:(", in_which_func(cpu.eip));
+		printf(")\n");
+		while(ebp_now) {
+			ebp_last = swaddr_read(ebp_now, 4);
+			ret_addr = swaddr_read(ebp_now + 4, 4);
+			printf("#%d 0x%08x in %s arg:(", nr_frame, ret_addr, in_which_func(ret_addr));
+			printf(")\n");
+			nr_frame ++;
+			ebp_now = ebp_last;
+		}
+	}	
 	return 0;
 }
 void ui_mainloop() {
