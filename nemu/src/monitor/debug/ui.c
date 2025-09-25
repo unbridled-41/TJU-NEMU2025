@@ -211,23 +211,25 @@ static int cmd_bt(char *args){
 	}
 	else{
 		swaddr_t ebp_now = cpu.ebp;
+		swaddr_t ebp_last = cpu.ebp;
 		swaddr_t ret_addr = 0;
 		char *func_name = NULL;
 		int nr_frame = 1, i = 0;
-		printf("#0 %s arg:(%d", in_which_func(cpu.eip), swaddr_read(cpu.eip, 4));
+		printf("#0 %s arg:(%d", in_which_func(cpu.eip), swaddr_read(ebp_last, 4));
 		for(i = 1;i <= 3;i ++)
-		      printf(", %d", swaddr_read(cpu.eip + i * 4, 4));
+		      printf(", %d", swaddr_read(ebp_last + i * 4, 4));
 		printf(")\n");
 		while(ebp_now) {
+			ebp_last = swaddr_read(ebp_now, 4);
 			ret_addr = swaddr_read(ebp_now + 4, 4);
 			func_name = in_which_func(ret_addr);
 			if(!func_name)break;
-			printf("#%d 0x%08x in %s arg:(%d", nr_frame, ret_addr, func_name, swaddr_read(ebp_now + 8, 4));
+			printf("#%d 0x%08x in %s arg:(%d", nr_frame, ret_addr, func_name, swaddr_read(ebp_last + 8, 4));
 			for(i = 1;i <= 3;i ++)
-			      printf(", %d", swaddr_read(ebp_now + 8  + i * 4, 4));
+			      printf(", %d", swaddr_read(ebp_last + 8  + i * 4, 4));
 			printf(")\n");
 			nr_frame ++;
-			ebp_now = swaddr_read(ebp_now, 4);
+			ebp_now = ebp_now;
 
 		}
 	}	
