@@ -210,8 +210,8 @@ static int cmd_bt(char *args){
 		printf("No stack.");
 	}
 	else{
-		swaddr_t ebp_now = 0;
-		swaddr_t ebp_last = cpu.ebp;
+		swaddr_t ebp_now = cpu.ebp;
+		swaddr_t ebp_last = 0;
 		swaddr_t ret_addr = 0;
 		int nr_frame = 1;
 		printf("#0 %s arg:(", in_which_func(cpu.eip));
