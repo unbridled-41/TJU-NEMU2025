@@ -213,18 +213,22 @@ static int cmd_bt(char *args){
 		swaddr_t ebp_now = cpu.ebp;
 		swaddr_t ret_addr = 0;
 		char *func_name = NULL;
-		int nr_frame = 1;
-		printf("#0 %s arg:(", in_which_func(cpu.eip));
+		int nr_frame = 1, i = 0;
+		printf("#0 %s arg:(%d", in_which_func(cpu.eip), swaddr_read(cpu.eip, 4));
+		for(i = 1;i <= 3;i ++)
+		      printf(", %d", swaddr_read(cpu.eip + i * 4, 4));
 		printf(")\n");
 		while(ebp_now) {
 			ret_addr = swaddr_read(ebp_now + 4, 4);
 			func_name = in_which_func(ret_addr);
 			if(!func_name)break;
-			printf("#%d 0x%08x in %s arg:(", nr_frame, ret_addr, func_name);
+			printf("#%d 0x%08x in %s arg:(%d", nr_frame, ret_addr, func_name, swaddr_read(ebp_now + 8, 4));
+			for(i = 1;i <= 3;i ++)
+			      printf(", %d", swaddr_read(ebp_now + 8  + i * 4, 4));
 			printf(")\n");
 			nr_frame ++;
 			ebp_now = swaddr_read(ebp_now, 4);
-			
+
 		}
 	}	
 	return 0;
