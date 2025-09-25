@@ -229,7 +229,7 @@ static int cmd_bt(char *args){
 			      printf(", %d", swaddr_read(ebp_last + 8  + i * 4, 4));
 			printf(")\n");
 			nr_frame ++;
-			ebp_now = ebp_now;
+			ebp_now = ebp_last;
 
 		}
 	}	
