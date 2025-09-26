@@ -56,7 +56,7 @@ make_group(group2_1_v,
 /* 0xd2 */
 make_group(group2_cl_b,
 	inv, inv, inv, inv, 
-	inv, inv, inv, inv)
+	shl_rm_cl_v, inv, inv, sar_rm_cl_b)
  
 /* 0xd3 */
 make_group(group2_cl_v,
@@ -65,7 +65,7 @@ make_group(group2_cl_v,
 
 /* 0xf6 */
 make_group(group3_b,
-	test_i2rm_b, inv, inv, inv, 
+	test_i2rm_b, inv, not_rm_b, neg_rm_b, 
 	mul_rm_b, imul_rm2a_b, div_rm_b, idiv_rm_b)
 
 /* 0xf7 */
