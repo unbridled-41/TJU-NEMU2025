@@ -9,7 +9,7 @@
 void ide_read(uint8_t *, uint32_t, uint32_t);
 #else
 void ramdisk_read(uint8_t *, uint32_t, uint32_t);
-void ramdisk_write(uint8_t *buf, uint32_t offset, uint32_t len);
+void ramdisk_write(uint8_t *, uint32_t, uint32_t);
 #endif
 
 #define STACK_SIZE (1 << 20)
@@ -33,7 +33,7 @@ uint32_t loader() {
 	elf = (void*)buf;
 
 	/* TODO: fix the magic number with the correct one */
-	const uint32_t elf_magic = 0x7f454c46;;
+	const uint32_t elf_magic = 0x464c457f;
 	uint32_t *p_magic = (void *)buf;
 	nemu_assert(*p_magic == elf_magic);
 
