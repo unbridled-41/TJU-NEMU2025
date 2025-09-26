@@ -2,8 +2,11 @@
 #include <stdint.h>
 #include "FLOAT.h"
 
+//#include <sys/mman.h>
+
 extern char _vfprintf_internal;
 extern char _fpmaxtostr;
+extern char _ppfs_setargs;
 extern int __stdio_fwrite(char *buf, int len, FILE *stream);
 
 __attribute__((used)) static int format_FLOAT(FILE *stream, FLOAT f) {
@@ -16,7 +19,11 @@ __attribute__((used)) static int format_FLOAT(FILE *stream, FLOAT f) {
 	 */
 
 	char buf[80];
-	int len = sprintf(buf, "0x%08x", f);
+	int sgn = 1;
+	if(f < 0){f = -f; sgn = 0;}
+	int little = (long long)(f & 0xffff) * 1000000ll >> 16;
+	int len = sprintf(buf, "-%d.%06d" + sgn, (f >> 16), little);
+	
 	return __stdio_fwrite(buf, len, stream);
 }
 
@@ -26,6 +33,25 @@ static void modify_vfprintf() {
 	 * is the code section in _vfprintf_internal() relative to the
 	 * hijack.
 	 */
+//0x8048889- 0x8048583=0x306
+
+//	mprotect((void *)((0x8048825) & 0xfffff000), 4096*2, PROT_READ | PROT_WRITE | PROT_EXEC);
+	
+	// call <format_FLOAT>
+	*(uint32_t *)(&_vfprintf_internal + 0x307) += (uint32_t)&format_FLOAT - (uint32_t)&_fpmaxtostr;
+	
+	// argumemts:0x306-7-3= 0x2fc 0x306-7-3-3=0x2f9
+	*(char *)(&_vfprintf_internal + 0x2fb) = 0x8;// 0xc->0x8
+
+	*(char *)(&_vfprintf_internal + 0x2fc) = 0xff;// pushl
+	*(char *)(&_vfprintf_internal + 0x2fd) = 0x32;// (%edx)
+	*(char *)(&_vfprintf_internal + 0x2fe) = 0x90;// nop
+        // clear float instruction
+	*(char *)(&_vfprintf_internal + 0x2e4) = 0x90;// nop
+	*(char *)(&_vfprintf_internal + 0x2e5) = 0x90;// nop
+	*(char *)(&_vfprintf_internal + 0x2e8) = 0x90;// nop
+	*(char *)(&_vfprintf_internal + 0x2e9) = 0x90;// nop
+
 
 #if 0
 	else if (ppfs->conv_num <= CONV_A) {  /* floating point */
@@ -72,7 +98,11 @@ static void modify_ppfs_setargs() {
 	 * Below is the code section in _vfprintf_internal() relative to
 	 * the modification.
 	 */
-
+// 0x8010ea-0x801076 = 0x74
+// 0x801119 - 0x8010ec = 0x2d
+	*(char *)(&_ppfs_setargs + 0x71) = 0xeb;//jmp
+	*(char *)(&_ppfs_setargs + 0x72) = 0x30;//0x30
+	*(char *)(&_ppfs_setargs + 0x73) = 0x90;//nop
 #if 0
 	enum {                          /* C type: */
 		PA_INT,                       /* int */

@@ -1,8 +1,8 @@
 #include "FLOAT.h"
 
 FLOAT F_mul_F(FLOAT a, FLOAT b) {
-	nemu_assert(0);
-	return 0;
+	//	nemu_assert(0);
+	return((long long)1ll * a * b) >> 16ll;
 }
 
 FLOAT F_div_F(FLOAT a, FLOAT b) {
@@ -23,11 +23,34 @@ FLOAT F_div_F(FLOAT a, FLOAT b) {
 	 * It is OK not to use the template above, but you should figure
 	 * out another way to perform the division.
 	 */
+	// a * (1 << 16) / b
+	// idiv : "64/32" division (or "32/16", "16/8")
+	FLOAT q, r;
+	asm volatile ("idiv %2" : "=a"(q), "=d"(r) : "r"(b), "a"(a << 16), "d"(a >> 16));
 
-	nemu_assert(0);
-	return 0;
+	/*another way:
+	
+		// the FLOAT quo of (a << 16) / b just is the max number q such that
+		// q * b <= (a << 16)
+		int sgn = (a > 0) ^ (b > 0);
+		a = a > 0 ? a : -a;
+		b = b > 0 ? b : -b;
+		int q = 0;
+		long long _a = (long long)a << 16ll;
+		long long _b = (long long)b;
+		for(int k = 30; k >= 0; k--){
+			if((long long)q * b + (b << k) <= a)
+				q |= (1 << k);
+		}
+		if(sgn)q = -q;
+	*/
+	//	nemu_assert(0);
+	return q;
 }
-
+union {
+	float f;
+	unsigned u;
+}f2u;
 FLOAT f2F(float a) {
 	/* You should figure out how to convert `a' into FLOAT without
 	 * introducing x87 floating point instructions. Else you can
@@ -38,14 +61,35 @@ FLOAT f2F(float a) {
 	 * stack. How do you retrieve it to another variable without
 	 * performing arithmetic operations on it directly?
 	 */
-
-	nemu_assert(0);
-	return 0;
+	f2u.f = a;
+	unsigned x = f2u.u;
+	FLOAT b = 0;
+	int frac = x & ((1u << 23) - 1);
+	int exp = (x>>23) & ((1u << 8) - 1);
+	if(exp == 0){
+		b = 0;
+	}else if(exp == 255){
+		//panic("NAN or INF!");
+	}else{
+		exp -= 127 + 7;
+		frac += (1 << 23);
+		if(exp < -23)
+		      b = 0;
+		else if(exp > 7);
+		      //panic("float too big!");
+		else if(exp > 0)
+		      b = frac << exp;
+		else 
+		      b = frac >> (-exp);
+	}
+	if(x >> 31)b = -b;
+	//	nemu_assert(0);
+	return b;
 }
 
 FLOAT Fabs(FLOAT a) {
-	nemu_assert(0);
-	return 0;
+	//	nemu_assert(0);
+	return a > 0 ? a : -a;
 }
 
 /* Functions below are already implemented */
