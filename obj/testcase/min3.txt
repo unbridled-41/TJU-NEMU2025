@@ -1,0 +1,85 @@
+
+obj/testcase/min3:     file format elf32-i386
+
+
+Disassembly of section .text:
+
+00800094 <_start>:
+  800094:	bd 00 00 00 00       	mov    $0x0,%ebp
+  800099:	bc f0 ff ff 07       	mov    $0x7fffff0,%esp
+  80009e:	e8 35 00 00 00       	call   8000d8 <main>
+  8000a3:	b8 00 00 00 00       	mov    $0x0,%eax
+  8000a8:	d6                   	(bad)  
+
+008000a9 <min3>:
+  8000a9:	55                   	push   %ebp
+  8000aa:	89 e5                	mov    %esp,%ebp
+  8000ac:	83 ec 10             	sub    $0x10,%esp
+  8000af:	8b 45 08             	mov    0x8(%ebp),%eax
+  8000b2:	3b 45 0c             	cmp    0xc(%ebp),%eax
+  8000b5:	7d 08                	jge    8000bf <min3+0x16>
+  8000b7:	8b 45 08             	mov    0x8(%ebp),%eax
+  8000ba:	89 45 fc             	mov    %eax,-0x4(%ebp)
+  8000bd:	eb 06                	jmp    8000c5 <min3+0x1c>
+  8000bf:	8b 45 0c             	mov    0xc(%ebp),%eax
+  8000c2:	89 45 fc             	mov    %eax,-0x4(%ebp)
+  8000c5:	8b 45 10             	mov    0x10(%ebp),%eax
+  8000c8:	3b 45 fc             	cmp    -0x4(%ebp),%eax
+  8000cb:	7d 06                	jge    8000d3 <min3+0x2a>
+  8000cd:	8b 45 10             	mov    0x10(%ebp),%eax
+  8000d0:	89 45 fc             	mov    %eax,-0x4(%ebp)
+  8000d3:	8b 45 fc             	mov    -0x4(%ebp),%eax
+  8000d6:	c9                   	leave  
+  8000d7:	c3                   	ret    
+
+008000d8 <main>:
+  8000d8:	55                   	push   %ebp
+  8000d9:	89 e5                	mov    %esp,%ebp
+  8000db:	83 ec 2c             	sub    $0x2c,%esp
+  8000de:	c7 45 f8 00 00 00 00 	movl   $0x0,-0x8(%ebp)
+  8000e5:	c7 45 fc 00 00 00 00 	movl   $0x0,-0x4(%ebp)
+  8000ec:	c7 45 ec 00 00 00 00 	movl   $0x0,-0x14(%ebp)
+  8000f3:	eb 7d                	jmp    800172 <main+0x9a>
+  8000f5:	c7 45 f0 00 00 00 00 	movl   $0x0,-0x10(%ebp)
+  8000fc:	eb 68                	jmp    800166 <main+0x8e>
+  8000fe:	c7 45 f4 00 00 00 00 	movl   $0x0,-0xc(%ebp)
+  800105:	eb 53                	jmp    80015a <main+0x82>
+  800107:	8b 45 f4             	mov    -0xc(%ebp),%eax
+  80010a:	8b 0c 85 a0 11 80 00 	mov    0x8011a0(,%eax,4),%ecx
+  800111:	8b 45 f0             	mov    -0x10(%ebp),%eax
+  800114:	8b 14 85 a0 11 80 00 	mov    0x8011a0(,%eax,4),%edx
+  80011b:	8b 45 ec             	mov    -0x14(%ebp),%eax
+  80011e:	8b 04 85 a0 11 80 00 	mov    0x8011a0(,%eax,4),%eax
+  800125:	89 4c 24 08          	mov    %ecx,0x8(%esp)
+  800129:	89 54 24 04          	mov    %edx,0x4(%esp)
+  80012d:	89 04 24             	mov    %eax,(%esp)
+  800130:	e8 74 ff ff ff       	call   8000a9 <min3>
+  800135:	8b 55 f8             	mov    -0x8(%ebp),%edx
+  800138:	8b 14 95 c0 11 80 00 	mov    0x8011c0(,%edx,4),%edx
+  80013f:	39 d0                	cmp    %edx,%eax
+  800141:	0f 95 c0             	setne  %al
+  800144:	83 45 f8 01          	addl   $0x1,-0x8(%ebp)
+  800148:	84 c0                	test   %al,%al
+  80014a:	74 06                	je     800152 <main+0x7a>
+  80014c:	b8 01 00 00 00       	mov    $0x1,%eax
+  800151:	d6                   	(bad)  
+  800152:	83 45 fc 01          	addl   $0x1,-0x4(%ebp)
+  800156:	83 45 f4 01          	addl   $0x1,-0xc(%ebp)
+  80015a:	8b 45 f4             	mov    -0xc(%ebp),%eax
+  80015d:	83 f8 07             	cmp    $0x7,%eax
+  800160:	76 a5                	jbe    800107 <main+0x2f>
+  800162:	83 45 f0 01          	addl   $0x1,-0x10(%ebp)
+  800166:	8b 45 f0             	mov    -0x10(%ebp),%eax
+  800169:	83 f8 07             	cmp    $0x7,%eax
+  80016c:	76 90                	jbe    8000fe <main+0x26>
+  80016e:	83 45 ec 01          	addl   $0x1,-0x14(%ebp)
+  800172:	8b 45 ec             	mov    -0x14(%ebp),%eax
+  800175:	83 f8 07             	cmp    $0x7,%eax
+  800178:	0f 86 77 ff ff ff    	jbe    8000f5 <main+0x1d>
+  80017e:	81 7d fc 00 02 00 00 	cmpl   $0x200,-0x4(%ebp)
+  800185:	74 06                	je     80018d <main+0xb5>
+  800187:	b8 01 00 00 00       	mov    $0x1,%eax
+  80018c:	d6                   	(bad)  
+  80018d:	b8 00 00 00 00       	mov    $0x0,%eax
+  800192:	c9                   	leave  
+  800193:	c3                   	ret    
