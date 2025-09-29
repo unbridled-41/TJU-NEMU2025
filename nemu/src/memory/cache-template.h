@@ -43,11 +43,11 @@ void concat(cache, _read)(hwaddr_t addr, uint8_t *buf)
 		i = rand() % E;
 	}
 	if(use_dirty && cache[set_index][i].dirty){
-		miss_write((set_index << b) + (cache[set_index][i].tag << (s + b)), cache[set_index][i].buf);
+		((miss_write))((set_index << b) + (cache[set_index][i].tag << (s + b)), cache[set_index][i].buf);
 	}
 	cache[set_index][i].valid = 1;
 	cache[set_index][i].tag = tag;
-	miss_read(addr & ~(B - 1),  cache[set_index][i].buf);
+	(miss_read)(addr & ~(B - 1),  cache[set_index][i].buf);
 	memcpy(buf, cache[set_index][i].buf, B);
 }
 void concat(cache, _write)(hwaddr_t addr, uint8_t *buf)
@@ -67,7 +67,7 @@ void concat(cache, _write)(hwaddr_t addr, uint8_t *buf)
 				cache[set_index][i].dirty = 1;
 			}
 			else{
-				miss_write(addr & ~(B - 1),  buf);
+				(miss_write)(addr & ~(B - 1),  buf);
 			}
 		}
 	}
@@ -85,7 +85,7 @@ void concat(cache, _write)(hwaddr_t addr, uint8_t *buf)
 			i = rand() % E;
 		}
 		if(cache[set_index][i].dirty){
-			miss_write((set_index << b) + (cache[set_index][i].tag << (s + b)), cache[set_index][i].buf);
+			(miss_write)((set_index << b) + (cache[set_index][i].tag << (s + b)), cache[set_index][i].buf);
 		}
 		cache[set_index][i].valid = 1;
 		cache[set_index][i].tag = tag;
@@ -93,7 +93,7 @@ void concat(cache, _write)(hwaddr_t addr, uint8_t *buf)
 		cache[set_index][i].dirty = 1;
 	}
 	else{
-		miss_write(addr & ~(B - 1),  buf);
+		(miss_write)(addr & ~(B - 1),  buf);
 	}
 
 }
