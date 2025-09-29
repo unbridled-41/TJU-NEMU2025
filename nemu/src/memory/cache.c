@@ -85,7 +85,7 @@ void cache_write(hwaddr_t addr, size_t len, uint32_t data) {
 
 	L1_write(addr, temp, mask);
 
-	if(offset + len > BURST_LEN) {
+	if(offset + len > 64) {
 		/* data cross the burst boundary */
 		L1_write(addr + 64, temp + 64, mask + 64);
 	}
