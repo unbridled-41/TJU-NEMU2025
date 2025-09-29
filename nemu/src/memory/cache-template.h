@@ -1,6 +1,6 @@
 #define S (1 << s)
 #define B (1 << b)
-#define t (32 - s -b)
+#define t (27 - s -b)
 cache_line **cache;
 void concat(init_, cache)(){
 	

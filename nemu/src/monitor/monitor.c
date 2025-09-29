@@ -10,6 +10,8 @@ void load_elf_tables(int, char *[]);
 void init_regex();
 void init_wp_pool();
 void init_ddr3();
+void init_L1();
+void init_L2();
 
 FILE *log_fp = NULL;
 
@@ -86,10 +88,16 @@ void restart() {
 
 	/* Set the initial instruction pointer. */
 	cpu.eip = ENTRY_START;
-
+	cpu.esp = (1 << 24);
 	/* Set the initial eflags register. */
 	cpu.eflags.val = 0x2;
 
 	/* Initialize DRAM. */
 	init_ddr3();
+		
+	/* Initialize cache. */
+	init_L1();
+	init_L2();
+
+
 }
