@@ -4,6 +4,7 @@
 #include "misc.h"
 extern void ddr3_read(hwaddr_t, uint8_t *);
 extern void ddr3_write(hwaddr_t, uint8_t *, uint8_t *);
+uint8_t all_mask[2 * 64];
 typedef struct{
 	uint8_t valid;
 	uint8_t dirty;
@@ -17,13 +18,14 @@ void Ln_read(hwaddr_t addr, uint8_t *buf){
 		ddr3_read(addr + 8 * i, buf + 8 * i);
 	}
 }
-void Ln_write(hwaddr_t addr, uint8_t *buf){
-	uint8_t mask[BURST_LEN] = {1,1,1,1,1,1,1,1};
+
+void Ln_write(hwaddr_t addr, uint8_t *buf, uint8_t *mask){
 	int i;
 	for(i = 0;i < 8; i++){
 		ddr3_write(addr + 8 * i, buf + 8 * i, mask);
 	}
 }
+
 
 #define miss_read  Ln_read
 #define miss_write  Ln_write
@@ -58,3 +60,33 @@ void Ln_write(hwaddr_t addr, uint8_t *buf){
 #undef use_dirty
 #undef cache
 
+uint32_t cache_read(hwaddr_t addr, size_t len) {
+	uint32_t offset = addr & 0x3f;
+	uint8_t temp[2 * 64];
+	
+	L1_read(addr, temp);
+
+	if(offset + len > 64) {
+		/* data cross the burst boundary */
+		L1_read(addr + 64, temp + 64);
+	}
+
+	return unalign_rw(temp + offset, 4);
+}
+
+void cache_write(hwaddr_t addr, size_t len, uint32_t data) {
+	uint32_t offset = addr & 0x3f;
+	uint8_t temp[2 * 64];
+	uint8_t mask[2 * 64];
+	memset(mask, 0, 2 * 64);
+
+	*(uint32_t *)(temp + offset) = data;
+	memset(mask + offset, 1, len);
+
+	L1_write(addr, temp, mask);
+
+	if(offset + len > BURST_LEN) {
+		/* data cross the burst boundary */
+		L1_write(addr + 64, temp + 64, mask + 64);
+	}
+}

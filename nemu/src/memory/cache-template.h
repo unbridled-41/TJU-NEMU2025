@@ -2,8 +2,9 @@
 #define B (1 << b)
 #define t (32 - s -b)
 cache_line **cache;
-void concat(init_, cache)()
-{
+void concat(init_, cache)(){
+	
+	memset(all_mask, 1, 2 * 64);
 	cache = (cache_line **)malloc(S * sizeof(cache_line *));
 	int i, j;
 	for (i = 0; i < S; i++){
@@ -15,8 +16,7 @@ void concat(init_, cache)()
 		}
 	}
 }
-void concat(cache, _read)(hwaddr_t addr, uint8_t *buf)
-{
+void concat(cache, _read)(hwaddr_t addr, uint8_t *buf){
 	hwaddr_t addr_temp = addr;
 	addr_temp >>= b;
 	uint32_t set_index = addr_temp & (S - 1);
@@ -43,15 +43,14 @@ void concat(cache, _read)(hwaddr_t addr, uint8_t *buf)
 		i = rand() % E;
 	}
 	if(use_dirty && cache[set_index][i].dirty){
-		((miss_write))((set_index << b) + (cache[set_index][i].tag << (s + b)), cache[set_index][i].buf);
+		((miss_write))((set_index << b) + (cache[set_index][i].tag << (s + b)), cache[set_index][i].buf, all_mask);
 	}
 	cache[set_index][i].valid = 1;
 	cache[set_index][i].tag = tag;
 	(miss_read)(addr & ~(B - 1),  cache[set_index][i].buf);
 	memcpy(buf, cache[set_index][i].buf, B);
 }
-void concat(cache, _write)(hwaddr_t addr, uint8_t *buf)
-{
+void concat(cache, _write)(hwaddr_t addr, uint8_t *buf, uint8_t *mask){
 	hwaddr_t addr_temp = addr;
 	addr_temp >>= b;
 	uint32_t set_index = addr_temp & (S - 1);
@@ -62,12 +61,12 @@ void concat(cache, _write)(hwaddr_t addr, uint8_t *buf)
 		if (cache[set_index][i].tag == tag && cache[set_index][i].valid)
 		{
 			// hit:
-			memcpy(cache[set_index][i].buf, buf, B);
+			memcpy_with_mask(cache[set_index][i].buf, buf, B, mask);
 			if(use_dirty){
 				cache[set_index][i].dirty = 1;
 			}
 			else{
-				(miss_write)(addr & ~(B - 1),  buf);
+				(miss_write)(addr & ~(B - 1),  buf, mask);
 			}
 		}
 	}
@@ -85,15 +84,16 @@ void concat(cache, _write)(hwaddr_t addr, uint8_t *buf)
 			i = rand() % E;
 		}
 		if(cache[set_index][i].dirty){
-			(miss_write)((set_index << b) + (cache[set_index][i].tag << (s + b)), cache[set_index][i].buf);
+			(miss_write)((set_index << b) + (cache[set_index][i].tag << (s + b)), cache[set_index][i].buf, all_mask);
 		}
 		cache[set_index][i].valid = 1;
 		cache[set_index][i].tag = tag;
-		memcpy(cache[set_index][i].buf, buf, B);
+		(miss_read)(addr, cache[set_index][i].buf);
+		memcpy_with_mask(cache[set_index][i].buf, buf, B, mask);
 		cache[set_index][i].dirty = 1;
 	}
 	else{
-		(miss_write)(addr & ~(B - 1),  buf);
+		(miss_write)(addr & ~(B - 1),  buf, mask);
 	}
 
 }
