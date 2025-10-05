@@ -1,0 +1,7 @@
+Welcome to NEMU!
+The executable is obj/testcase/mov-c.
+For help, type "help"
+(nemu) c
+[1;31mnemu: HIT GOOD TRAP[0m at eip = 0x001010db
+
+(nemu) q
