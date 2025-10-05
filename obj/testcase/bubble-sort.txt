@@ -1,0 +1,90 @@
+
+obj/testcase/bubble-sort:     file format elf32-i386
+
+
+Disassembly of section .text:
+
+00800094 <_start>:
+  800094:	bd 00 00 00 00       	mov    $0x0,%ebp
+  800099:	bc f0 ff ff 07       	mov    $0x7fffff0,%esp
+  80009e:	e8 8a 00 00 00       	call   80012d <main>
+  8000a3:	b8 00 00 00 00       	mov    $0x0,%eax
+  8000a8:	d6                   	(bad)  
+
+008000a9 <bubble_sort>:
+  8000a9:	55                   	push   %ebp
+  8000aa:	89 e5                	mov    %esp,%ebp
+  8000ac:	83 ec 10             	sub    $0x10,%esp
+  8000af:	c7 45 f8 00 00 00 00 	movl   $0x0,-0x8(%ebp)
+  8000b6:	eb 6d                	jmp    800125 <bubble_sort+0x7c>
+  8000b8:	c7 45 f4 00 00 00 00 	movl   $0x0,-0xc(%ebp)
+  8000bf:	eb 53                	jmp    800114 <bubble_sort+0x6b>
+  8000c1:	8b 45 f4             	mov    -0xc(%ebp),%eax
+  8000c4:	8b 14 85 c0 11 80 00 	mov    0x8011c0(,%eax,4),%edx
+  8000cb:	8b 45 f4             	mov    -0xc(%ebp),%eax
+  8000ce:	83 c0 01             	add    $0x1,%eax
+  8000d1:	8b 04 85 c0 11 80 00 	mov    0x8011c0(,%eax,4),%eax
+  8000d8:	39 c2                	cmp    %eax,%edx
+  8000da:	7e 34                	jle    800110 <bubble_sort+0x67>
+  8000dc:	8b 45 f4             	mov    -0xc(%ebp),%eax
+  8000df:	8b 04 85 c0 11 80 00 	mov    0x8011c0(,%eax,4),%eax
+  8000e6:	89 45 fc             	mov    %eax,-0x4(%ebp)
+  8000e9:	8b 45 f4             	mov    -0xc(%ebp),%eax
+  8000ec:	8b 55 f4             	mov    -0xc(%ebp),%edx
+  8000ef:	83 c2 01             	add    $0x1,%edx
+  8000f2:	8b 14 95 c0 11 80 00 	mov    0x8011c0(,%edx,4),%edx
+  8000f9:	89 14 85 c0 11 80 00 	mov    %edx,0x8011c0(,%eax,4)
+  800100:	8b 45 f4             	mov    -0xc(%ebp),%eax
+  800103:	8d 50 01             	lea    0x1(%eax),%edx
+  800106:	8b 45 fc             	mov    -0x4(%ebp),%eax
+  800109:	89 04 95 c0 11 80 00 	mov    %eax,0x8011c0(,%edx,4)
+  800110:	83 45 f4 01          	addl   $0x1,-0xc(%ebp)
+  800114:	b8 63 00 00 00       	mov    $0x63,%eax
+  800119:	2b 45 f8             	sub    -0x8(%ebp),%eax
+  80011c:	3b 45 f4             	cmp    -0xc(%ebp),%eax
+  80011f:	7f a0                	jg     8000c1 <bubble_sort+0x18>
+  800121:	83 45 f8 01          	addl   $0x1,-0x8(%ebp)
+  800125:	83 7d f8 63          	cmpl   $0x63,-0x8(%ebp)
+  800129:	7e 8d                	jle    8000b8 <bubble_sort+0xf>
+  80012b:	c9                   	leave  
+  80012c:	c3                   	ret    
+
+0080012d <main>:
+  80012d:	55                   	push   %ebp
+  80012e:	89 e5                	mov    %esp,%ebp
+  800130:	83 ec 10             	sub    $0x10,%esp
+  800133:	e8 71 ff ff ff       	call   8000a9 <bubble_sort>
+  800138:	c7 45 fc 00 00 00 00 	movl   $0x0,-0x4(%ebp)
+  80013f:	eb 19                	jmp    80015a <main+0x2d>
+  800141:	8b 45 fc             	mov    -0x4(%ebp),%eax
+  800144:	8b 04 85 c0 11 80 00 	mov    0x8011c0(,%eax,4),%eax
+  80014b:	3b 45 fc             	cmp    -0x4(%ebp),%eax
+  80014e:	74 06                	je     800156 <main+0x29>
+  800150:	b8 01 00 00 00       	mov    $0x1,%eax
+  800155:	d6                   	(bad)  
+  800156:	83 45 fc 01          	addl   $0x1,-0x4(%ebp)
+  80015a:	83 7d fc 63          	cmpl   $0x63,-0x4(%ebp)
+  80015e:	7e e1                	jle    800141 <main+0x14>
+  800160:	83 7d fc 64          	cmpl   $0x64,-0x4(%ebp)
+  800164:	74 06                	je     80016c <main+0x3f>
+  800166:	b8 01 00 00 00       	mov    $0x1,%eax
+  80016b:	d6                   	(bad)  
+  80016c:	e8 38 ff ff ff       	call   8000a9 <bubble_sort>
+  800171:	c7 45 fc 00 00 00 00 	movl   $0x0,-0x4(%ebp)
+  800178:	eb 19                	jmp    800193 <main+0x66>
+  80017a:	8b 45 fc             	mov    -0x4(%ebp),%eax
+  80017d:	8b 04 85 c0 11 80 00 	mov    0x8011c0(,%eax,4),%eax
+  800184:	3b 45 fc             	cmp    -0x4(%ebp),%eax
+  800187:	74 06                	je     80018f <main+0x62>
+  800189:	b8 01 00 00 00       	mov    $0x1,%eax
+  80018e:	d6                   	(bad)  
+  80018f:	83 45 fc 01          	addl   $0x1,-0x4(%ebp)
+  800193:	83 7d fc 63          	cmpl   $0x63,-0x4(%ebp)
+  800197:	7e e1                	jle    80017a <main+0x4d>
+  800199:	83 7d fc 64          	cmpl   $0x64,-0x4(%ebp)
+  80019d:	74 06                	je     8001a5 <main+0x78>
+  80019f:	b8 01 00 00 00       	mov    $0x1,%eax
+  8001a4:	d6                   	(bad)  
+  8001a5:	b8 00 00 00 00       	mov    $0x0,%eax
+  8001aa:	c9                   	leave  
+  8001ab:	c3                   	ret    

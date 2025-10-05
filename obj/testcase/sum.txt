@@ -1,0 +1,32 @@
+
+obj/testcase/sum:     file format elf32-i386
+
+
+Disassembly of section .text:
+
+00800074 <_start>:
+  800074:	bd 00 00 00 00       	mov    $0x0,%ebp
+  800079:	bc f0 ff ff 07       	mov    $0x7fffff0,%esp
+  80007e:	e8 06 00 00 00       	call   800089 <main>
+  800083:	b8 00 00 00 00       	mov    $0x0,%eax
+  800088:	d6                   	(bad)  
+
+00800089 <main>:
+  800089:	55                   	push   %ebp
+  80008a:	89 e5                	mov    %esp,%ebp
+  80008c:	83 ec 10             	sub    $0x10,%esp
+  80008f:	c7 45 f8 01 00 00 00 	movl   $0x1,-0x8(%ebp)
+  800096:	c7 45 fc 00 00 00 00 	movl   $0x0,-0x4(%ebp)
+  80009d:	eb 0a                	jmp    8000a9 <main+0x20>
+  80009f:	8b 45 f8             	mov    -0x8(%ebp),%eax
+  8000a2:	01 45 fc             	add    %eax,-0x4(%ebp)
+  8000a5:	83 45 f8 01          	addl   $0x1,-0x8(%ebp)
+  8000a9:	83 7d f8 64          	cmpl   $0x64,-0x8(%ebp)
+  8000ad:	7e f0                	jle    80009f <main+0x16>
+  8000af:	81 7d fc ba 13 00 00 	cmpl   $0x13ba,-0x4(%ebp)
+  8000b6:	74 06                	je     8000be <main+0x35>
+  8000b8:	b8 01 00 00 00       	mov    $0x1,%eax
+  8000bd:	d6                   	(bad)  
+  8000be:	b8 00 00 00 00       	mov    $0x0,%eax
+  8000c3:	c9                   	leave  
+  8000c4:	c3                   	ret    
