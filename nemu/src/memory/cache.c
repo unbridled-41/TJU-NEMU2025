@@ -24,7 +24,7 @@ void Ln_write(hwaddr_t addr, uint8_t *buf, uint8_t *mask){
 	int i;
 	addr &= ~63;
 	for(i = 0;i < 8; i++){
-		ddr3_write(addr + 8 * i, buf + 8 * i, mask);
+		ddr3_write(addr + 8 * i, buf + 8 * i, mask + 8 * i);
 	}
 }
 
