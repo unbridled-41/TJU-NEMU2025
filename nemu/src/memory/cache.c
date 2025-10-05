@@ -64,6 +64,7 @@ void Ln_write(hwaddr_t addr, uint8_t *buf, uint8_t *mask){
 
 uint32_t cache_read(hwaddr_t addr, size_t len) {
 	uint32_t offset = addr & 0x3f;
+	addr -= offset;
 	uint8_t temp[2 * 64];
 	
 	L1_read(addr, temp);
@@ -78,7 +79,8 @@ uint32_t cache_read(hwaddr_t addr, size_t len) {
 
 void cache_write(hwaddr_t addr, size_t len, uint32_t data) {
 	uint32_t offset = addr & 0x3f;
-	uint8_t temp[2 * 64];
+	addr -= offset;
+    uint8_t temp[2 * 64];
 	uint8_t mask[2 * 64];
 	memset(mask, 0, 2 * 64);
 
