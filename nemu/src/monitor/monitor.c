@@ -97,7 +97,7 @@ void restart() {
 		
 	/* Initialize cache. */
 	init_L1();
-	init_L2();
+	//init_L2();
 
 
 }
