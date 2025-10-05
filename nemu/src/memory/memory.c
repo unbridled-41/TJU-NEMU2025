@@ -9,14 +9,14 @@ void dram_write(hwaddr_t, size_t, uint32_t);
 /* Memory accessing interfaces */
 
 uint32_t hwaddr_read(hwaddr_t addr, size_t len) {
-    /*uint32_t dr = dram_read(addr, len);
+    uint32_t dr = dram_read(addr, len);
 	uint32_t cr = cache_read(addr,len);
 	if(dr!=cr){
 		printf("0x%x,eip=0x%x\n",addr,cpu.eip);
 		printf("dr = 0x%x\ncr = 0x%x\n",dr,cr);
 	}	
 	return cr & (~0u >> ((4 - len) << 3));
-	*/return cache_read(addr, len) & (~0u >> ((4 - len) << 3));
+	//return cache_read(addr, len) & (~0u >> ((4 - len) << 3));
 }
 
 void hwaddr_write(hwaddr_t addr, size_t len, uint32_t data) {
