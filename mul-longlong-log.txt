@@ -1,5 +1,5 @@
 Welcome to NEMU!
-The executable is obj/testcase/hello.
+The executable is obj/testcase/mul-longlong.
 For help, type "help"
 (nemu) c
 

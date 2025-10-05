@@ -22,24 +22,19 @@ void concat(cache, _read)(hwaddr_t addr, uint8_t *buf){
 	uint32_t set_index = addr_temp & (S - 1);
 	uint32_t tag = addr_temp >> s;
 	int i;
-	for (i = 0; i < E; i++)
-	{
-		if (cache[set_index][i].tag == tag && cache[set_index][i].valid)
-		{
+	for (i = 0; i < E; i++){
+		if (cache[set_index][i].tag == tag && cache[set_index][i].valid){
 			// hit:
 			memcpy(buf, cache[set_index][i].buf, B);
 		}
 	}
 	// miss:
-	for (i = 0; i < E; i++)
-	{
-		if (!cache[set_index][i].valid)
-		{
+	for (i = 0; i < E; i++){
+		if (!cache[set_index][i].valid){
 			break;
 		}
 	}
-	if (i == E)
-	{
+	if (i == E){
 		i = rand() % E;
 	}
 	if(use_dirty && cache[set_index][i].dirty){
