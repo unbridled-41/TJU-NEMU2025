@@ -1,8 +1,0 @@
-Welcome to NEMU!
-The executable is obj/testcase/switch.
-For help, type "help"
-(nemu) c
-
-
-===== the original log.txt =====
-
