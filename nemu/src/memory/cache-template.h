@@ -37,7 +37,7 @@ void concat(cache, _read)(hwaddr_t addr, uint8_t *buf){
 	if (i == E){
 		i = rand() % E;
 	}
-	if(use_dirty && cache[set_index][i].dirty){
+	if(use_dirty && cache[set_index][i].dirty && cache[set_index][i].valid){
 		((miss_write))((set_index << b) + (cache[set_index][i].tag << (s + b)), cache[set_index][i].buf, all_mask);
 	}
 	cache[set_index][i].valid = 1;
@@ -67,18 +67,15 @@ void concat(cache, _write)(hwaddr_t addr, uint8_t *buf, uint8_t *mask){
 	}
 	// miss:
 	if(use_dirty){
-		for (i = 0; i < E; i++)
-		{
-			if (!cache[set_index][i].valid)
-			{
+		for (i = 0; i < E; i++){
+			if (!cache[set_index][i].valid){
 				break;
 			}
 		}
-		if (i == E)
-		{
+		if (i == E){
 			i = rand() % E;
 		}
-		if(cache[set_index][i].dirty){
+		if(cache[set_index][i].dirty && cache[set_index][i].valid){
 			(miss_write)((set_index << b) + (cache[set_index][i].tag << (s + b)), cache[set_index][i].buf, all_mask);
 		}
 		cache[set_index][i].valid = 1;
