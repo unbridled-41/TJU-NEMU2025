@@ -28,8 +28,8 @@ void concat(cache, _read)(hwaddr_t addr, uint8_t *buf){
 			memcpy(buf, cache[set_index][i].buf, B);
 		}
 	}
-	// miss:
-	printf("miss: %x %x\n",tag,set_index);
+	// miss: 
+	//printf("miss: %x %x\n",tag,set_index);
 	for (i = 0; i < E; i++){
 		if (!cache[set_index][i].valid){
 			break;
