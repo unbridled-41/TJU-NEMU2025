@@ -20,7 +20,7 @@ uint32_t get_ucr3();
 uint32_t loader() {
 	Elf32_Ehdr *elf;
 	Elf32_Phdr *ph = NULL;
-    set_bp();
+
 	uint8_t buf[4096];
 
 #ifdef HAS_DEVICE
