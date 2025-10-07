@@ -1,11 +1,22 @@
+/*
+ * CPU指令执行实现文件
+ * 定义指令解码和执行的核心结构和函数
+ */
+
 #include "cpu/helper.h"
 #include "cpu/decode/modrm.h"
 
 #include "all-instr.h"
 
-typedef int (*helper_fun)(swaddr_t);
-static make_helper(_2byte_esc);
+typedef int (*helper_fun)(swaddr_t);  // 指令辅助函数类型定义
+static make_helper(_2byte_esc);       // 双字节指令转义函数声明
 
+/*
+ * 创建指令组的宏定义
+ * 参数:
+ *   name - 指令组名称
+ *   item0-item7 - 指令组中的8个指令处理函数
+ */
 #define make_group(name, item0, item1, item2, item3, item4, item5, item6, item7) \
 	static helper_fun concat(opcode_table_, name) [8] = { \
 	/* 0x00 */	item0, item1, item2, item3, \
@@ -17,18 +28,18 @@ static make_helper(_2byte_esc);
 		return concat(opcode_table_, name) [m.opcode](eip); \
 	}
 	
-/* 0x80 */
+/* 0x80 - 单字节立即数运算指令组 (8位操作数) */
 make_group(group1_b,
 	add_i2rm_b, or_i2rm_b, adc_i2rm_b, sub_i2rm_b, 
 	and_i2rm_b, sub_i2rm_b, xor_i2rm_b, cmp_i2rm_b)
 
 
-/* 0x81 */
+/* 0x81 - 双字立即数运算指令组 (32位操作数) */
 make_group(group1_v,
 	add_i2rm_v, or_i2rm_v, adc_i2rm_v, sub_i2rm_v, 
 	and_i2rm_v, sub_i2rm_v, xor_i2rm_v, cmp_i2rm_v)
 
-/* 0x83 */
+/* 0x83 - 带符号扩展的立即数运算指令组 */
 make_group(group1_sx_v,
 	add_si2rm_v, or_si2rm_v, adc_si2rm_v, sub_si2rm_v, 
 	and_si2rm_v, sub_si2rm_v, xor_si2rm_v, cmp_si2rm_v)
@@ -94,6 +105,10 @@ make_group(group7,
 
 /* TODO: Add more instructions!!! */
 
+/*
+ * 主操作码表 (单字节指令)
+ * 索引为指令操作码，值为对应的指令处理函数
+ */
 helper_fun opcode_table [256] = {
 /* 0x00 */	add_r2rm_b,add_r2rm_v, add_rm2r_b, add_rm2r_v,
 /* 0x04 */	add_i2a_b, add_i2a_v, inv, inv,
@@ -161,6 +176,10 @@ helper_fun opcode_table [256] = {
 /* 0xfc */	inv, inv, group4, group5
 };
 
+/*
+ * 双字节操作码表
+ * 用于处理以0x0f开头的扩展指令
+ */
 helper_fun _2byte_opcode_table [256] = {
 /* 0x00 */	group6, group7, inv, inv, 
 /* 0x04 */	inv, inv, inv, inv, 
@@ -228,11 +247,21 @@ helper_fun _2byte_opcode_table [256] = {
 /* 0xfc */	inv, inv, inv, inv
 };
 
+/*
+ * 指令执行的入口函数
+ * 功能: 获取当前指令操作码，并调用对应的指令处理函数
+ * 返回值: 指令长度
+ */
 make_helper(exec) {
 	ops_decoded.opcode = instr_fetch(eip, 1);
 	return opcode_table[ ops_decoded.opcode ](eip);
 }
 
+/*
+ * 双字节指令转义处理函数
+ * 功能: 处理以0x0f开头的双字节指令
+ * 返回值: 指令长度
+ */
 static make_helper(_2byte_esc) {
 	eip ++;
 	uint32_t opcode = instr_fetch(eip, 1);
