@@ -1,0 +1,2 @@
+matrix-mul-log.txt filter=lfs diff=lfs merge=lfs -text
+log.txt filter=lfs diff=lfs merge=lfs -text

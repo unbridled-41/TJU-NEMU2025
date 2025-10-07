@@ -1,0 +1,34 @@
+# 编译产物
+obj/
+*.o
+*.d
+*.log.txt
+
+# 二进制文件
+entry
+
+# 第三方库
+lib-common/uclibc/lib/
+lib-common/uclibc/include/
+
+# 打包文件
+*.zip
+
+# 编辑器临时文件
+*.swp
+*.swo
+*~
+
+# IDE配置文件
+.vscode/
+.idea/
+
+# 系统文件
+.DS_Store
+Thumbs.db
+
+# 测试输出
+*.txt
+
+# 缓存文件
+.cache/
