@@ -20,7 +20,7 @@ void concat(cache, _read)(hwaddr_t addr, uint8_t *buf){
 	hwaddr_t addr_temp = addr;
 	addr_temp >>= b;
 	uint32_t set_index = addr_temp & (S - 1);
-	uint32_t tag = addr_temp >> s;
+	uint32_t tag = (addr_temp >> s) &((1 << t) - 1);
 	int i;
 	for (i = 0; i < E; i++){
 		if (cache[set_index][i].tag == tag && cache[set_index][i].valid){
@@ -53,7 +53,7 @@ void concat(cache, _write)(hwaddr_t addr, uint8_t *buf, uint8_t *mask){
 	hwaddr_t addr_temp = addr;
 	addr_temp >>= b;
 	uint32_t set_index = addr_temp & (S - 1);
-	uint32_t tag = addr_temp >> s;
+	uint32_t tag = (addr_temp >> s) &((1 << t) - 1);
 	int i;
 	for (i = 0; i < E; i++){
 		if (cache[set_index][i].tag == tag && cache[set_index][i].valid){
