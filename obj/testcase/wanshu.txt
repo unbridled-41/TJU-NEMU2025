@@ -1,0 +1,60 @@
+
+obj/testcase/wanshu:     file format elf32-i386
+
+
+Disassembly of section .text:
+
+00800094 <_start>:
+  800094:	bd 00 00 00 00       	mov    $0x0,%ebp
+  800099:	bc f0 ff ff 07       	mov    $0x7fffff0,%esp
+  80009e:	e8 06 00 00 00       	call   8000a9 <main>
+  8000a3:	b8 00 00 00 00       	mov    $0x0,%eax
+  8000a8:	d6                   	(bad)  
+
+008000a9 <main>:
+  8000a9:	55                   	push   %ebp
+  8000aa:	89 e5                	mov    %esp,%ebp
+  8000ac:	83 ec 10             	sub    $0x10,%esp
+  8000af:	c7 45 fc 00 00 00 00 	movl   $0x0,-0x4(%ebp)
+  8000b6:	c7 45 f0 01 00 00 00 	movl   $0x1,-0x10(%ebp)
+  8000bd:	eb 58                	jmp    800117 <main+0x6e>
+  8000bf:	c7 45 f4 00 00 00 00 	movl   $0x0,-0xc(%ebp)
+  8000c6:	c7 45 f8 01 00 00 00 	movl   $0x1,-0x8(%ebp)
+  8000cd:	eb 1b                	jmp    8000ea <main+0x41>
+  8000cf:	8b 45 f0             	mov    -0x10(%ebp),%eax
+  8000d2:	89 c2                	mov    %eax,%edx
+  8000d4:	c1 fa 1f             	sar    $0x1f,%edx
+  8000d7:	f7 7d f8             	idivl  -0x8(%ebp)
+  8000da:	89 d0                	mov    %edx,%eax
+  8000dc:	85 c0                	test   %eax,%eax
+  8000de:	75 06                	jne    8000e6 <main+0x3d>
+  8000e0:	8b 45 f8             	mov    -0x8(%ebp),%eax
+  8000e3:	01 45 f4             	add    %eax,-0xc(%ebp)
+  8000e6:	83 45 f8 01          	addl   $0x1,-0x8(%ebp)
+  8000ea:	8b 45 f8             	mov    -0x8(%ebp),%eax
+  8000ed:	3b 45 f0             	cmp    -0x10(%ebp),%eax
+  8000f0:	7c dd                	jl     8000cf <main+0x26>
+  8000f2:	8b 45 f4             	mov    -0xc(%ebp),%eax
+  8000f5:	3b 45 f0             	cmp    -0x10(%ebp),%eax
+  8000f8:	75 19                	jne    800113 <main+0x6a>
+  8000fa:	8b 45 fc             	mov    -0x4(%ebp),%eax
+  8000fd:	8b 04 85 44 11 80 00 	mov    0x801144(,%eax,4),%eax
+  800104:	3b 45 f0             	cmp    -0x10(%ebp),%eax
+  800107:	74 06                	je     80010f <main+0x66>
+  800109:	b8 01 00 00 00       	mov    $0x1,%eax
+  80010e:	d6                   	(bad)  
+  80010f:	83 45 fc 01          	addl   $0x1,-0x4(%ebp)
+  800113:	83 45 f0 01          	addl   $0x1,-0x10(%ebp)
+  800117:	81 7d f0 f3 01 00 00 	cmpl   $0x1f3,-0x10(%ebp)
+  80011e:	7e 9f                	jle    8000bf <main+0x16>
+  800120:	81 7d f0 f4 01 00 00 	cmpl   $0x1f4,-0x10(%ebp)
+  800127:	74 06                	je     80012f <main+0x86>
+  800129:	b8 01 00 00 00       	mov    $0x1,%eax
+  80012e:	d6                   	(bad)  
+  80012f:	83 7d fc 03          	cmpl   $0x3,-0x4(%ebp)
+  800133:	74 06                	je     80013b <main+0x92>
+  800135:	b8 01 00 00 00       	mov    $0x1,%eax
+  80013a:	d6                   	(bad)  
+  80013b:	b8 00 00 00 00       	mov    $0x0,%eax
+  800140:	c9                   	leave  
+  800141:	c3                   	ret    

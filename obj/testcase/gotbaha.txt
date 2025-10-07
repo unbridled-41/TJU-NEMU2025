@@ -1,0 +1,93 @@
+
+obj/testcase/gotbaha:     file format elf32-i386
+
+
+Disassembly of section .text:
+
+00800074 <_start>:
+  800074:	bd 00 00 00 00       	mov    $0x0,%ebp
+  800079:	bc f0 ff ff 07       	mov    $0x7fffff0,%esp
+  80007e:	e8 9d 00 00 00       	call   800120 <main>
+  800083:	b8 00 00 00 00       	mov    $0x0,%eax
+  800088:	d6                   	(bad)  
+
+00800089 <is_prime>:
+  800089:	55                   	push   %ebp
+  80008a:	89 e5                	mov    %esp,%ebp
+  80008c:	83 ec 10             	sub    $0x10,%esp
+  80008f:	83 7d 08 01          	cmpl   $0x1,0x8(%ebp)
+  800093:	7f 07                	jg     80009c <is_prime+0x13>
+  800095:	b8 00 00 00 00       	mov    $0x0,%eax
+  80009a:	eb 32                	jmp    8000ce <is_prime+0x45>
+  80009c:	c7 45 fc 02 00 00 00 	movl   $0x2,-0x4(%ebp)
+  8000a3:	eb 1c                	jmp    8000c1 <is_prime+0x38>
+  8000a5:	8b 45 08             	mov    0x8(%ebp),%eax
+  8000a8:	89 c2                	mov    %eax,%edx
+  8000aa:	c1 fa 1f             	sar    $0x1f,%edx
+  8000ad:	f7 7d fc             	idivl  -0x4(%ebp)
+  8000b0:	89 d0                	mov    %edx,%eax
+  8000b2:	85 c0                	test   %eax,%eax
+  8000b4:	75 07                	jne    8000bd <is_prime+0x34>
+  8000b6:	b8 00 00 00 00       	mov    $0x0,%eax
+  8000bb:	eb 11                	jmp    8000ce <is_prime+0x45>
+  8000bd:	83 45 fc 01          	addl   $0x1,-0x4(%ebp)
+  8000c1:	8b 45 fc             	mov    -0x4(%ebp),%eax
+  8000c4:	3b 45 08             	cmp    0x8(%ebp),%eax
+  8000c7:	7c dc                	jl     8000a5 <is_prime+0x1c>
+  8000c9:	b8 01 00 00 00       	mov    $0x1,%eax
+  8000ce:	c9                   	leave  
+  8000cf:	c3                   	ret    
+
+008000d0 <gotbaha>:
+  8000d0:	55                   	push   %ebp
+  8000d1:	89 e5                	mov    %esp,%ebp
+  8000d3:	83 ec 14             	sub    $0x14,%esp
+  8000d6:	c7 45 fc 02 00 00 00 	movl   $0x2,-0x4(%ebp)
+  8000dd:	eb 32                	jmp    800111 <gotbaha+0x41>
+  8000df:	8b 45 fc             	mov    -0x4(%ebp),%eax
+  8000e2:	89 04 24             	mov    %eax,(%esp)
+  8000e5:	e8 9f ff ff ff       	call   800089 <is_prime>
+  8000ea:	85 c0                	test   %eax,%eax
+  8000ec:	74 1f                	je     80010d <gotbaha+0x3d>
+  8000ee:	8b 45 fc             	mov    -0x4(%ebp),%eax
+  8000f1:	8b 55 08             	mov    0x8(%ebp),%edx
+  8000f4:	89 d1                	mov    %edx,%ecx
+  8000f6:	29 c1                	sub    %eax,%ecx
+  8000f8:	89 c8                	mov    %ecx,%eax
+  8000fa:	89 04 24             	mov    %eax,(%esp)
+  8000fd:	e8 87 ff ff ff       	call   800089 <is_prime>
+  800102:	85 c0                	test   %eax,%eax
+  800104:	74 07                	je     80010d <gotbaha+0x3d>
+  800106:	b8 01 00 00 00       	mov    $0x1,%eax
+  80010b:	eb 11                	jmp    80011e <gotbaha+0x4e>
+  80010d:	83 45 fc 01          	addl   $0x1,-0x4(%ebp)
+  800111:	8b 45 fc             	mov    -0x4(%ebp),%eax
+  800114:	3b 45 08             	cmp    0x8(%ebp),%eax
+  800117:	7c c6                	jl     8000df <gotbaha+0xf>
+  800119:	b8 00 00 00 00       	mov    $0x0,%eax
+  80011e:	c9                   	leave  
+  80011f:	c3                   	ret    
+
+00800120 <main>:
+  800120:	55                   	push   %ebp
+  800121:	89 e5                	mov    %esp,%ebp
+  800123:	83 ec 14             	sub    $0x14,%esp
+  800126:	c7 45 fc 04 00 00 00 	movl   $0x4,-0x4(%ebp)
+  80012d:	eb 1a                	jmp    800149 <main+0x29>
+  80012f:	8b 45 fc             	mov    -0x4(%ebp),%eax
+  800132:	89 04 24             	mov    %eax,(%esp)
+  800135:	e8 96 ff ff ff       	call   8000d0 <gotbaha>
+  80013a:	83 f8 01             	cmp    $0x1,%eax
+  80013d:	74 06                	je     800145 <main+0x25>
+  80013f:	b8 01 00 00 00       	mov    $0x1,%eax
+  800144:	d6                   	(bad)  
+  800145:	83 45 fc 02          	addl   $0x2,-0x4(%ebp)
+  800149:	83 7d fc 64          	cmpl   $0x64,-0x4(%ebp)
+  80014d:	7e e0                	jle    80012f <main+0xf>
+  80014f:	83 7d fc 66          	cmpl   $0x66,-0x4(%ebp)
+  800153:	74 06                	je     80015b <main+0x3b>
+  800155:	b8 01 00 00 00       	mov    $0x1,%eax
+  80015a:	d6                   	(bad)  
+  80015b:	b8 00 00 00 00       	mov    $0x0,%eax
+  800160:	c9                   	leave  
+  800161:	c3                   	ret    

@@ -1,0 +1,106 @@
+
+obj/testcase/pascal:     file format elf32-i386
+
+
+Disassembly of section .text:
+
+00800094 <_start>:
+  800094:	bd 00 00 00 00       	mov    $0x0,%ebp
+  800099:	bc f0 ff ff 07       	mov    $0x7fffff0,%esp
+  80009e:	e8 06 00 00 00       	call   8000a9 <main>
+  8000a3:	b8 00 00 00 00       	mov    $0x0,%eax
+  8000a8:	d6                   	(bad)  
+
+008000a9 <main>:
+  8000a9:	55                   	push   %ebp
+  8000aa:	89 e5                	mov    %esp,%ebp
+  8000ac:	57                   	push   %edi
+  8000ad:	56                   	push   %esi
+  8000ae:	53                   	push   %ebx
+  8000af:	83 ec 10             	sub    $0x10,%esp
+  8000b2:	c7 45 ec 00 00 00 00 	movl   $0x0,-0x14(%ebp)
+  8000b9:	eb 43                	jmp    8000fe <main+0x55>
+  8000bb:	8b 5d ec             	mov    -0x14(%ebp),%ebx
+  8000be:	8b 55 ec             	mov    -0x14(%ebp),%edx
+  8000c1:	8b 4d ec             	mov    -0x14(%ebp),%ecx
+  8000c4:	89 d0                	mov    %edx,%eax
+  8000c6:	c1 e0 05             	shl    $0x5,%eax
+  8000c9:	29 d0                	sub    %edx,%eax
+  8000cb:	01 c8                	add    %ecx,%eax
+  8000cd:	c7 04 85 80 10 80 00 	movl   $0x1,0x801080(,%eax,4)
+  8000d4:	01 00 00 00 
+  8000d8:	89 d0                	mov    %edx,%eax
+  8000da:	c1 e0 05             	shl    $0x5,%eax
+  8000dd:	29 d0                	sub    %edx,%eax
+  8000df:	01 c8                	add    %ecx,%eax
+  8000e1:	8b 0c 85 80 10 80 00 	mov    0x801080(,%eax,4),%ecx
+  8000e8:	89 d8                	mov    %ebx,%eax
+  8000ea:	c1 e0 02             	shl    $0x2,%eax
+  8000ed:	89 c2                	mov    %eax,%edx
+  8000ef:	c1 e2 05             	shl    $0x5,%edx
+  8000f2:	29 c2                	sub    %eax,%edx
+  8000f4:	89 8a 80 10 80 00    	mov    %ecx,0x801080(%edx)
+  8000fa:	83 45 ec 01          	addl   $0x1,-0x14(%ebp)
+  8000fe:	83 7d ec 1e          	cmpl   $0x1e,-0x14(%ebp)
+  800102:	7e b7                	jle    8000bb <main+0x12>
+  800104:	c7 45 ec 02 00 00 00 	movl   $0x2,-0x14(%ebp)
+  80010b:	eb 67                	jmp    800174 <main+0xcb>
+  80010d:	c7 45 f0 01 00 00 00 	movl   $0x1,-0x10(%ebp)
+  800114:	eb 52                	jmp    800168 <main+0xbf>
+  800116:	8b 55 ec             	mov    -0x14(%ebp),%edx
+  800119:	8b 5d f0             	mov    -0x10(%ebp),%ebx
+  80011c:	8b 45 ec             	mov    -0x14(%ebp),%eax
+  80011f:	8d 48 ff             	lea    -0x1(%eax),%ecx
+  800122:	8b 45 f0             	mov    -0x10(%ebp),%eax
+  800125:	8d 70 ff             	lea    -0x1(%eax),%esi
+  800128:	89 c8                	mov    %ecx,%eax
+  80012a:	c1 e0 05             	shl    $0x5,%eax
+  80012d:	29 c8                	sub    %ecx,%eax
+  80012f:	01 f0                	add    %esi,%eax
+  800131:	8b 34 85 80 10 80 00 	mov    0x801080(,%eax,4),%esi
+  800138:	8b 45 ec             	mov    -0x14(%ebp),%eax
+  80013b:	8d 48 ff             	lea    -0x1(%eax),%ecx
+  80013e:	8b 7d f0             	mov    -0x10(%ebp),%edi
+  800141:	89 c8                	mov    %ecx,%eax
+  800143:	c1 e0 05             	shl    $0x5,%eax
+  800146:	29 c8                	sub    %ecx,%eax
+  800148:	01 f8                	add    %edi,%eax
+  80014a:	8b 04 85 80 10 80 00 	mov    0x801080(,%eax,4),%eax
+  800151:	8d 0c 06             	lea    (%esi,%eax,1),%ecx
+  800154:	89 d0                	mov    %edx,%eax
+  800156:	c1 e0 05             	shl    $0x5,%eax
+  800159:	29 d0                	sub    %edx,%eax
+  80015b:	01 d8                	add    %ebx,%eax
+  80015d:	89 0c 85 80 10 80 00 	mov    %ecx,0x801080(,%eax,4)
+  800164:	83 45 f0 01          	addl   $0x1,-0x10(%ebp)
+  800168:	8b 45 f0             	mov    -0x10(%ebp),%eax
+  80016b:	3b 45 ec             	cmp    -0x14(%ebp),%eax
+  80016e:	7c a6                	jl     800116 <main+0x6d>
+  800170:	83 45 ec 01          	addl   $0x1,-0x14(%ebp)
+  800174:	83 7d ec 1e          	cmpl   $0x1e,-0x14(%ebp)
+  800178:	7e 93                	jle    80010d <main+0x64>
+  80017a:	c7 45 f0 00 00 00 00 	movl   $0x0,-0x10(%ebp)
+  800181:	eb 27                	jmp    8001aa <main+0x101>
+  800183:	8b 45 f0             	mov    -0x10(%ebp),%eax
+  800186:	05 a2 03 00 00       	add    $0x3a2,%eax
+  80018b:	8b 14 85 80 10 80 00 	mov    0x801080(,%eax,4),%edx
+  800192:	8b 45 f0             	mov    -0x10(%ebp),%eax
+  800195:	8b 04 85 00 10 80 00 	mov    0x801000(,%eax,4),%eax
+  80019c:	39 c2                	cmp    %eax,%edx
+  80019e:	74 06                	je     8001a6 <main+0xfd>
+  8001a0:	b8 01 00 00 00       	mov    $0x1,%eax
+  8001a5:	d6                   	(bad)  
+  8001a6:	83 45 f0 01          	addl   $0x1,-0x10(%ebp)
+  8001aa:	83 7d f0 1e          	cmpl   $0x1e,-0x10(%ebp)
+  8001ae:	7e d3                	jle    800183 <main+0xda>
+  8001b0:	83 7d f0 1f          	cmpl   $0x1f,-0x10(%ebp)
+  8001b4:	74 06                	je     8001bc <main+0x113>
+  8001b6:	b8 01 00 00 00       	mov    $0x1,%eax
+  8001bb:	d6                   	(bad)  
+  8001bc:	b8 00 00 00 00       	mov    $0x0,%eax
+  8001c1:	83 c4 10             	add    $0x10,%esp
+  8001c4:	5b                   	pop    %ebx
+  8001c5:	5e                   	pop    %esi
+  8001c6:	5f                   	pop    %edi
+  8001c7:	5d                   	pop    %ebp
+  8001c8:	c3                   	ret    
