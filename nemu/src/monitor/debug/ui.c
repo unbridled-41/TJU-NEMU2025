@@ -1,3 +1,8 @@
+/*
+ * 用户界面实现文件
+ * 提供命令行交互功能，处理用户输入的命令并执行相应操作
+ */
+
 #include "monitor/monitor.h"
 #include "monitor/expr.h"
 #include "monitor/watchpoint.h"
@@ -7,9 +12,9 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 
-void cpu_exec(uint32_t);
+void cpu_exec(uint32_t);  // 前向声明CPU执行函数
 
-char *in_which_func(swaddr_t addr);
+char *in_which_func(swaddr_t addr);  // 前向声明函数查询函数
 
 /* We use the `readline' library to provide more flexibility to read from stdin. */
 char* rl_gets() {
@@ -29,15 +34,26 @@ char* rl_gets() {
 	return line_read;
 }
 
-int nr_exp = 0, nr_wp = 0; 
+int nr_exp = 0, nr_wp = 0;  // 表达式计数器和监视点计数器
+
+/*
+ * 继续执行程序命令
+ * 参数: args - 命令参数
+ * 返回值: 0表示成功
+ */
+static int cmd_c(char *args) {
 
 static int cmd_c(char *args) {
 	cpu_exec(-1);
 	return 0;
 }
 
+/*
+ * 退出NEMU命令
+ * 参数: args - 命令参数
+ * 返回值: -1表示退出
+ */
 static int cmd_q(char *args) {
-
 	return -1;
 }
 
@@ -57,10 +73,14 @@ static int cmd_d(char *args);
 
 static int cmd_bt(char *args);
 
+/*
+ * 命令表结构
+ * 存储所有支持的命令及其描述和处理函数
+ */
 static struct {
-	char *name;
-	char *description;
-	int (*handler) (char *);
+	char *name;           // 命令名称
+	char *description;    // 命令描述
+	int (*handler) (char *);  // 命令处理函数
 } cmd_table [] = {
 	{ "help", "Display informations about all supported commands", cmd_help },
 	{ "c", "Continue the execution of the program", cmd_c },
@@ -235,6 +255,10 @@ static int cmd_bt(char *args){
 	}	
 	return 0;
 }
+/*
+ * 用户界面主循环
+ * 功能: 循环读取用户输入的命令，并调用相应的命令处理函数
+ */
 void ui_mainloop() {
 	while(1) {
 		char *str = rl_gets();
