@@ -1,7 +1,10 @@
-void init_monitor(int, char *[]);
-void reg_test();
-void restart();
-void ui_mainloop();
+#include "nemu.h"
+
+/* 函数声明 */
+void init_monitor(int, char *[]);  // 初始化NEMU监控器
+void reg_test();                   // 测试CPU寄存器实现
+void restart();                    // 重启虚拟计算机系统
+void ui_mainloop();                // 用户交互主循环
 
 int main(int argc, char *argv[]) {
 

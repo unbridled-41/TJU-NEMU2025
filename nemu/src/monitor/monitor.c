@@ -1,30 +1,44 @@
+/*
+ * NEMU监控器实现文件
+ * 负责NEMU模拟器的初始化、重启和用户交互管理
+ */
+
 #include "nemu.h"
 
-#define ENTRY_START 0x100000
+#define ENTRY_START 0x100000  // 程序入口点地址
 
-extern uint8_t entry [];
-extern uint32_t entry_len;
-extern char *exec_file;
+/* 外部变量声明 */
+extern uint8_t entry[];     // 入口代码
+extern uint32_t entry_len;   // 入口代码长度
+extern char *exec_file;     // 可执行文件名
 
-void load_elf_tables(int, char *[]);
-void init_regex();
-void init_wp_pool();
-void init_ddr3();
-void init_L1();
-void init_L2();
+/* 函数声明 */
+void load_elf_tables(int, char *[]);  // 加载ELF表
+void init_regex();                     // 初始化正则表达式
+void init_wp_pool();                   // 初始化观察点池
+void init_ddr3();                      // 初始化DDR3内存
+void init_L1();                        // 初始化L1缓存
+void init_L2();                        // 初始化L2缓存
 
-FILE *log_fp = NULL;
+FILE *log_fp = NULL;  // 日志文件指针
 
+/* 初始化日志文件 */
 static void init_log() {
 	log_fp = fopen("log.txt", "w");
 	Assert(log_fp, "Can not open 'log.txt'");
 }
 
+/* 显示欢迎信息 */
 static void welcome() {
 	printf("Welcome to NEMU!\nThe executable is %s.\nFor help, type \"help\"\n",
-			exec_file);
+		exec_file);
 }
 
+/*
+ * 初始化NEMU监控器
+ * 参数: argc - 命令行参数数量
+ *       argv - 命令行参数数组
+ */
 void init_monitor(int argc, char *argv[]) {
 	/* Perform some global initialization */
 
@@ -45,6 +59,7 @@ void init_monitor(int argc, char *argv[]) {
 }
 
 #ifdef USE_RAMDISK
+/* 初始化内存磁盘 */
 static void init_ramdisk() {
 	int ret;
 	const int ramdisk_max_size = 0xa0000;
@@ -62,6 +77,7 @@ static void init_ramdisk() {
 }
 #endif
 
+/* 加载入口代码到内存 */
 static void load_entry() {
 	int ret;
 	FILE *fp = fopen("entry", "rb");
@@ -76,6 +92,7 @@ static void load_entry() {
 	fclose(fp);
 }
 
+/* 重启虚拟计算机系统 */
 void restart() {
 	/* Perform some initialization to restart a program */
 #ifdef USE_RAMDISK
