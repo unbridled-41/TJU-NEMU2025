@@ -36,6 +36,7 @@ void concat(cache, _read)(hwaddr_t addr, uint8_t *buf){
 		}
 	}
 	if (i == E){
+		srand(0);
 		i = rand() % E;
 		if(use_dirty && cache[set_index][i].dirty){
 			miss_write((set_index << b) + (cache[set_index][i].tag << (s + b)), cache[set_index][i].buf, all_mask);
@@ -74,6 +75,7 @@ void concat(cache, _write)(hwaddr_t addr, uint8_t *buf, uint8_t *mask){
 			}
 		}
 		if (i == E){
+			srand(0);
 			i = rand() % E;
 			if(cache[set_index][i].dirty){
 				(miss_write)((set_index << b) + (cache[set_index][i].tag << (s + b)), cache[set_index][i].buf, all_mask);
