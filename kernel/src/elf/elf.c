@@ -20,7 +20,7 @@ uint32_t get_ucr3();
 uint32_t loader() {
 	Elf32_Ehdr *elf;
 	Elf32_Phdr *ph = NULL;
-
+    set_bp();
 	uint8_t buf[4096];
 
 #ifdef HAS_DEVICE
@@ -30,7 +30,6 @@ uint32_t loader() {
 #endif
 
 	elf = (void*)buf;
-	set_bp();
 	/* TODO: fix the magic number with the correct one */
 	const uint32_t elf_magic = 0x464c457f;
 	uint32_t *p_magic = (void *)buf;
