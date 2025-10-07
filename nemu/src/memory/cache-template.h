@@ -40,10 +40,11 @@ void concat(cache, _read)(hwaddr_t addr, uint8_t *buf){
 			((miss_write))((set_index << b) + (cache[set_index][i].tag << (s + b)), cache[set_index][i].buf, all_mask);
 		}
     }
+
 	cache[set_index][i].valid = 1;
 	cache[set_index][i].tag = tag;
+	cache[set_index][i].dirty = 0;
 	(miss_read)(addr & ~(B - 1),  cache[set_index][i].buf);
-	cache[set_index][i].tag = tag;
 	memcpy(buf, cache[set_index][i].buf, B);
 }
 void concat(cache, _write)(hwaddr_t addr, uint8_t *buf, uint8_t *mask){
