@@ -7,25 +7,3 @@ nemu: nemu/src/cpu/exec/special/special.c:24: inv: Assertion `0' failed.
 
 ===== the original log.txt =====
 
-  100000:   bd 00 00 00 00                        movl $0x0,%ebp
-  100005:   bc 00 00 00 08                        movl $0x8000000,%esp
-  10000a:   e9 51 10 00 00                        jmp 101060
-  101060:   55                                    pushl %ebp
-  101061:   b8 a0 10 10 00                        movl $0x1010a0,%eax
-  101066:   89 e5                                 movl %esp,%ebp
-  101068:   83 ec 18                              subl $0x18,%esp
-  10106b:   ff e0                                 jmp *%eax
-  1010a0:   55                                    pushl %ebp
-  1010a1:   89 e5                                 movl %esp,%ebp
-  1010a3:   83 ec 18                              subl $0x18,%esp
-  1010a6:   c7 44 24 0c 63 17 10 00               movl $0x101763,0xc(%esp)
-  1010ae:   c7 44 24 08 4a 00 00 00               movl $0x4a,0x8(%esp)
-  1010b6:   c7 44 24 04 d0 16 10 00               movl $0x1016d0,0x4(%esp)
-  1010be:   c7 04 24 30 17 10 00                  movl $0x101730,(%esp)
-  1010c5:   e8 a6 00 00 00                        calll $0xa6
-  101170:   55                                    pushl %ebp
-  101171:   89 e5                                 movl %esp,%ebp
-  101173:   5d                                    popl %ebp
-  101174:   c3                                    ret
-       0:   7f 45                                 jg 47
-      47:   00 fc                                 addb %bh,%ah
