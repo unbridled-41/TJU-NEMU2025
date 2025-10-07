@@ -1,9 +1,11 @@
+
 #define S (1 << s)
 #define B (1 << b)
 #define t (27 - s -b)
+
 cache_line **cache;
 void concat(init_, cache)(){
-	
+
 	memset(all_mask, 1, 2 * 64);
 	cache = (cache_line **)malloc(S * sizeof(cache_line *));
 	int i, j;
@@ -16,6 +18,7 @@ void concat(init_, cache)(){
 		}
 	}
 }
+
 void concat(cache, _read)(hwaddr_t addr, uint8_t *buf){
 	hwaddr_t addr_temp = addr;
 	addr_temp >>= b;
@@ -29,8 +32,8 @@ void concat(cache, _read)(hwaddr_t addr, uint8_t *buf){
 			return;
 		}
 	}
-	// miss: 
-	//printf("miss: %x %x\n",tag,set_index);
+	// miss:
+//	printf("miss: %x %x\n",tag,set_index);
 	for (i = 0; i < E; i++){
 		if (!cache[set_index][i].valid){
 			break;
@@ -42,19 +45,20 @@ void concat(cache, _read)(hwaddr_t addr, uint8_t *buf){
 		if(use_dirty && cache[set_index][i].dirty){
 			miss_write((set_index << b) + (cache[set_index][i].tag << (s + b)), cache[set_index][i].buf, all_mask);
 		}
-    }
-
+	}
+	
 	cache[set_index][i].valid = 1;
 	cache[set_index][i].tag = tag;
 	cache[set_index][i].dirty = 0;
 	(miss_read)(addr & ~(B - 1),  cache[set_index][i].buf);
 	memcpy(buf, cache[set_index][i].buf, B);
 }
+
 void concat(cache, _write)(hwaddr_t addr, uint8_t *buf, uint8_t *mask){
 	hwaddr_t addr_temp = addr;
 	addr_temp >>= b;
 	uint32_t set_index = addr_temp & (S - 1);
-	uint32_t tag = (addr_temp >> s) &((1 << t) - 1);
+	uint32_t tag = addr_temp >> s &((1 << t) - 1);
 	int i;
 	for (i = 0; i < E; i++){
 		if (cache[set_index][i].tag == tag && cache[set_index][i].valid){
@@ -66,7 +70,7 @@ void concat(cache, _write)(hwaddr_t addr, uint8_t *buf, uint8_t *mask){
 			else{
 				(miss_write)(addr & ~(B - 1),  buf, mask);
 			}
-			return ;
+			return;
 		}
 	}
 	// miss:

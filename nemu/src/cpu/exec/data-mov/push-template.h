@@ -5,8 +5,8 @@
 static void do_execute() {
 	// must be 4 
 	cpu.esp -= 4; 
-    swaddr_write(cpu.esp, 4, op_src->val);	
-    print_asm_template1();	
+	swaddr_write(cpu.esp, 4, op_src->val);
+	print_asm_template1();	
 }
 
 #if DATA_BYTE == 2 || DATA_BYTE == 4

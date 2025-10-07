@@ -14,7 +14,7 @@ typedef struct{
 
 void Ln_read(hwaddr_t addr, uint8_t *buf){
 	int i;
-	addr &= ~63;
+        addr &= ~63;
 	for(i = 0;i < 8; i++){
 		ddr3_read(addr + 8 * i, buf + 8 * i);
 	}
@@ -22,7 +22,7 @@ void Ln_read(hwaddr_t addr, uint8_t *buf){
 
 void Ln_write(hwaddr_t addr, uint8_t *buf, uint8_t *mask){
 	int i;
-	addr &= ~63;
+        addr &= ~63;
 	for(i = 0;i < 8; i++){
 		ddr3_write(addr + 8 * i, buf + 8 * i, mask + 8 * i);
 	}
@@ -51,7 +51,7 @@ void Ln_write(hwaddr_t addr, uint8_t *buf, uint8_t *mask){
 #define s 7
 #define b 6
 #define E 8
-#define use_dirty 0
+#define use_dirty 0 
 #define cache L1
 #include "cache-template.h"
 #undef miss_read
@@ -64,7 +64,7 @@ void Ln_write(hwaddr_t addr, uint8_t *buf, uint8_t *mask){
 
 uint32_t cache_read(hwaddr_t addr, size_t len) {
 	uint32_t offset = addr & 0x3f;
-	addr -= offset;
+        addr -= offset;
 	uint8_t temp[2 * 64];
 	
 	L1_read(addr, temp);
@@ -80,7 +80,7 @@ uint32_t cache_read(hwaddr_t addr, size_t len) {
 void cache_write(hwaddr_t addr, size_t len, uint32_t data) {
 	uint32_t offset = addr & 0x3f;
 	addr -= offset;
-    uint8_t temp[2 * 64];
+        uint8_t temp[2 * 64];
 	uint8_t mask[2 * 64];
 	memset(mask, 0, 2 * 64);
 

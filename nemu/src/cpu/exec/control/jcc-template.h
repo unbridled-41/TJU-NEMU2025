@@ -43,7 +43,7 @@ make_jcc_helper(SF,s)
 #undef SF
 #undef CF
 #undef OF
-
+#undef PF
 #endif
 
 #include "cpu/exec/template-end.h" 
