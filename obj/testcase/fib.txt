@@ -1,0 +1,46 @@
+
+obj/testcase/fib:     file format elf32-i386
+
+
+Disassembly of section .text:
+
+00800094 <_start>:
+  800094:	bd 00 00 00 00       	mov    $0x0,%ebp
+  800099:	bc f0 ff ff 07       	mov    $0x7fffff0,%esp
+  80009e:	e8 06 00 00 00       	call   8000a9 <main>
+  8000a3:	b8 00 00 00 00       	mov    $0x0,%eax
+  8000a8:	d6                   	(bad)  
+
+008000a9 <main>:
+  8000a9:	55                   	push   %ebp
+  8000aa:	89 e5                	mov    %esp,%ebp
+  8000ac:	83 ec 10             	sub    $0x10,%esp
+  8000af:	c7 45 fc 02 00 00 00 	movl   $0x2,-0x4(%ebp)
+  8000b6:	eb 49                	jmp    800101 <main+0x58>
+  8000b8:	8b 45 fc             	mov    -0x4(%ebp),%eax
+  8000bb:	8b 55 fc             	mov    -0x4(%ebp),%edx
+  8000be:	83 ea 01             	sub    $0x1,%edx
+  8000c1:	8b 0c 95 20 11 80 00 	mov    0x801120(,%edx,4),%ecx
+  8000c8:	8b 55 fc             	mov    -0x4(%ebp),%edx
+  8000cb:	83 ea 02             	sub    $0x2,%edx
+  8000ce:	8b 14 95 20 11 80 00 	mov    0x801120(,%edx,4),%edx
+  8000d5:	8d 14 11             	lea    (%ecx,%edx,1),%edx
+  8000d8:	89 14 85 20 11 80 00 	mov    %edx,0x801120(,%eax,4)
+  8000df:	8b 45 fc             	mov    -0x4(%ebp),%eax
+  8000e2:	8b 14 85 20 11 80 00 	mov    0x801120(,%eax,4),%edx
+  8000e9:	8b 45 fc             	mov    -0x4(%ebp),%eax
+  8000ec:	8b 04 85 c0 11 80 00 	mov    0x8011c0(,%eax,4),%eax
+  8000f3:	39 c2                	cmp    %eax,%edx
+  8000f5:	74 06                	je     8000fd <main+0x54>
+  8000f7:	b8 01 00 00 00       	mov    $0x1,%eax
+  8000fc:	d6                   	(bad)  
+  8000fd:	83 45 fc 01          	addl   $0x1,-0x4(%ebp)
+  800101:	83 7d fc 27          	cmpl   $0x27,-0x4(%ebp)
+  800105:	7e b1                	jle    8000b8 <main+0xf>
+  800107:	83 7d fc 28          	cmpl   $0x28,-0x4(%ebp)
+  80010b:	74 06                	je     800113 <main+0x6a>
+  80010d:	b8 01 00 00 00       	mov    $0x1,%eax
+  800112:	d6                   	(bad)  
+  800113:	b8 00 00 00 00       	mov    $0x0,%eax
+  800118:	c9                   	leave  
+  800119:	c3                   	ret    
