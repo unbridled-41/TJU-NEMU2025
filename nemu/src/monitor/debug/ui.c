@@ -41,36 +41,22 @@ int nr_exp = 0, nr_wp = 0;  // 表达式计数器和监视点计数器
  * 参数: args - 命令参数
  * 返回值: 0表示成功
  */
-static int cmd_c(char *args) {
-
-static int cmd_c(char *args) {
-	cpu_exec(-1);
-	return 0;
-}
+static int cmd_c(char *args);
 
 /*
  * 退出NEMU命令
  * 参数: args - 命令参数
  * 返回值: -1表示退出
  */
-static int cmd_q(char *args) {
-	return -1;
-}
+static int cmd_q(char *args);
 
 static int cmd_help(char *args);
-
 static int cmd_si(char *args);
-
 static int cmd_info(char *args);
-
 static int cmd_x(char *args);
-
 static int cmd_p(char *args);
-
 static int cmd_w(char *args);
-
 static int cmd_d(char *args);
-
 static int cmd_bt(char *args);
 
 /*
@@ -98,6 +84,25 @@ static struct {
 
 
 #define NR_CMD (sizeof(cmd_table) / sizeof(cmd_table[0]))
+
+/*
+ * 继续执行程序命令实现
+ * 参数: args - 命令参数
+ * 返回值: 0表示成功
+ */
+static int cmd_c(char *args) {
+	cpu_exec(-1);
+	return 0;
+}
+
+/*
+ * 退出NEMU命令实现
+ * 参数: args - 命令参数
+ * 返回值: -1表示退出
+ */
+static int cmd_q(char *args) {
+	return -1;
+}
 
 static int cmd_help(char *args) {
 	/* extract the first argument */
@@ -143,6 +148,7 @@ static int cmd_si(char *args){
 	printf("0x%x\n",cpu.eip);
 	return 0;
 }
+
 static int cmd_info(char *args){
 	char *arg = strtok(NULL, " ");
 	if(strlen(arg)>1){
@@ -153,12 +159,14 @@ static int cmd_info(char *args){
 		int i;
 		for(i = R_EAX; i <= R_EDI; i++){
 			printf("%s\t0x%.8x\t%.10u\n", regsl[i], cpu.gpr[i]._32, cpu.gpr[i]._32);
-		}printf("eip\t0x%.8x\t%.10u\n",cpu.eip,cpu.eip);
+		}
+		printf("eip\t0x%.8x\t%.10u\n",cpu.eip,cpu.eip);
 	}
 	else if(*arg == 'w'){
 		// todo
 		print_wp();	
-	}else{
+	}
+	else{
 		printf("Undefined info command: \"%s\".  Try \"help info\".\n",args);
 		return 0;
 	}
@@ -211,7 +219,8 @@ static int cmd_w(char *args){
 		wp->NO = nr_wp;
 		printf("watchpoint %d : %s\n", nr_wp, args);
 		nr_wp++;
-	}else{
+	}
+	else{
 		printf("Too many watchpoint!\n");
 	}
 	return 0;
@@ -225,6 +234,7 @@ static int cmd_d(char *args){
 	delete_wp(no);	
 	return 0;
 }
+
 static int cmd_bt(char *args){
 	if(!cpu.ebp){
 		printf("No stack.");
@@ -250,11 +260,11 @@ static int cmd_bt(char *args){
 			printf(")\n");
 			nr_frame ++;
 			ebp_now = ebp_last;
-
 		}
 	}	
 	return 0;
 }
+
 /*
  * 用户界面主循环
  * 功能: 循环读取用户输入的命令，并调用相应的命令处理函数
