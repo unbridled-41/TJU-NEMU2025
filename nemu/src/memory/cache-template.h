@@ -26,6 +26,7 @@ void concat(cache, _read)(hwaddr_t addr, uint8_t *buf){
 		if (cache[set_index][i].tag == tag && cache[set_index][i].valid){
 			// hit:
 			memcpy(buf, cache[set_index][i].buf, B);
+			return;
 		}
 	}
 	// miss: 
@@ -65,6 +66,7 @@ void concat(cache, _write)(hwaddr_t addr, uint8_t *buf, uint8_t *mask){
 			else{
 				(miss_write)(addr & ~(B - 1),  buf, mask);
 			}
+			return ;
 		}
 	}
 	// miss:
