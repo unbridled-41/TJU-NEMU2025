@@ -51,7 +51,7 @@ void Ln_write(hwaddr_t addr, uint8_t *buf, uint8_t *mask){
 #define s 7
 #define b 6
 #define E 8
-#define use_dirty 1
+#define use_dirty 0
 #define cache L1
 #include "cache-template.h"
 #undef miss_read
